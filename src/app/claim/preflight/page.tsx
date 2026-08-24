@@ -2,6 +2,7 @@ import Link from "next/link";
 import members from "@/data/mockMembers.json";
 import type { CheckResult, MemberProfile } from "@/types/member";
 import { overallReadiness, runPreflightChecks } from "@/lib/matchEngine";
+import { getExplanation } from "@/lib/llm";
 
 const typedMembers = members as MemberProfile[];
 
@@ -11,15 +12,33 @@ const STATUS_STYLES: Record<CheckResult["status"], { dot: string; card: string }
   fail: { dot: "bg-red-500", card: "border-red-200 bg-red-50" },
 };
 
-export default function PreflightPage({
+// "Why this matters" text is looked up from a static, precomputed cache
+// (src/data/explanationCache.json) — no live LLM call happens here.
+// See src/lib/llm/index.ts and docs/EPFO_Hackathon_Build_Plan.md.
+async function withExplanations(results: CheckResult[]) {
+  return Promise.all(
+    results.map(async (r) => {
+      if (r.status === "pass" || !r.variant) return { ...r, whyItMatters: undefined };
+      const whyItMatters = await getExplanation({
+        checkKey: r.key,
+        status: r.status,
+        variant: r.variant,
+      });
+      return { ...r, whyItMatters };
+    }),
+  );
+}
+
+export default async function PreflightPage({
   searchParams,
 }: {
   searchParams: { uan?: string; reason?: string };
 }) {
   const member = typedMembers.find((m) => m.uan === searchParams.uan) ?? typedMembers[0];
   const reason = searchParams.reason ?? "medical";
-  const results = runPreflightChecks(member);
-  const readiness = overallReadiness(results);
+  const checks = runPreflightChecks(member);
+  const results = await withExplanations(checks);
+  const readiness = overallReadiness(checks);
 
   return (
     <div className="max-w-md mx-auto px-6 py-10">
@@ -40,6 +59,12 @@ export default function PreflightPage({
                   <div className="text-xs text-slate-600 mt-1">{r.detail}</div>
                   {r.fixHint && (
                     <div className="text-xs text-slate-500 mt-2 italic">{r.fixHint}</div>
+                  )}
+                  {r.whyItMatters && (
+                    <div className="text-xs text-slate-600 mt-2 border-t border-slate-200/70 pt-2">
+                      <span className="font-medium">Why this matters: </span>
+                      {r.whyItMatters}
+                    </div>
                   )}
                 </div>
               </div>

@@ -41,4 +41,7 @@ export interface CheckResult {
   detail: string;
   fixHint: string;
   score?: number; // 0-100, only for name_match
+  // Coarse tag used to look up a cached plain-language explanation —
+  // see src/lib/llm. Undefined for "pass" results, which never need one.
+  variant?: import("@/lib/llm/types").ExplainVariant;
 }

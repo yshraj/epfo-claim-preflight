@@ -39,7 +39,8 @@ EPFO's current architecture suffers from an estimated 20% to 33% claim rejection
 1. User logs into Member Portal with UAN + Password + Captcha.
 2. Manually guesses the appropriate form (Form 19, 31, or 10C).
 3. Manually enters bank account number and uploads a scanned cheque (often rejected if blurry).
-4. Submits form → 15-day wait → Claim rejected with a cryptic code: *"Name mismatch / Annexure K missing"*.
+4. Submits form → weeks-long wait → Claim rejected with a short technical remark under Track Claim Status, e.g. *"KYC mismatch"* — reactive, buried, and only visible after the fact.
+   > **Corrected 25 Aug 2026:** earlier drafts used "Annexure K" as an example of a cryptic name-mismatch error. That's inaccurate — Annexure K is a real EPFO term, but it's specific to service-history verification during exempted-to-unexempted fund transfers, not name mismatches. Don't use "Annexure K" in the video or submission. Source: [EPFO circular, 18 Sep 2025](https://www.epfindia.gov.in/site_docs/PDFs/Circulars/Y2025-2026/EPFOCircular_18092025_AnnexureK.pdf).
 
 #### Redesigned Flow
 1. **Unified Dashboard:** User logs in with biometric or Aadhaar OTP.
@@ -49,7 +50,8 @@ EPFO's current architecture suffers from an estimated 20% to 33% claim rejection
    * *Aadhaar Name Match:* Real-time string similarity check between UIDAI and EPFO records.
    * *Bank Verification:* Instant ₹1 penny-drop API call to verify if the account is active and matches the member's legal name.
    * *Employer Exit Date:* Checks if the Date of Exit (DoE) is missing; if so, offers one-click self-declaration (if eligible after 60 days).
-5. **Instant e-Sign & Submission:** Digital signature via Aadhaar e-Sign; status moves straight to **"Auto-Settlement Pipeline"** (target: under 48 hours for advance claims).
+5. **Instant e-Sign & Submission:** Digital signature via Aadhaar e-Sign; status moves straight to **"Auto-Settlement Pipeline"**.
+   > **Corrected 25 Aug 2026:** EPFO's own current policy (effective 3 July 2026) targets **3 days for eligible claims** with complete KYC, auto-settlement up to ₹5 lakh, and a 20-day outer limit with 12% penal interest on delayed officials. "Under 48 hours" was an earlier, unverified estimate — do not use it in the video or submission. Source: [Business Today, 3 Jul 2026](https://www.businesstoday.in/personal-finance/news/story/epfos-new-3-day-pf-claim-settlement-faster-withdrawals-higher-auto-settlement-limit-new-epf-rules-explained-for-subscribers-540796-2026-07-03).
 
 ---
 
@@ -59,7 +61,7 @@ Instead of displaying post-facto cryptic rejection codes, the redesigned interfa
 
 | Failure Scenario | Current Behavior | Redesigned Functional & UI Fix |
 | :--- | :--- | :--- |
-| **Name Discrepancy** *(e.g., "Rajesh Kumar" vs "Rajesh K")* | Claim rejected after 14 days with *"Name mismatch on records"*. | **Pre-submission Blocker:** Highlight mismatch immediately with fuzzy-match score. If ≥ 85% match, prompt instant Aadhaar demographic override without employer approval. |
+| **Name Discrepancy** *(e.g., "Rajesh Kumar" vs "Rajesh K")* | Claim status shows a short technical remark under Track Claim Status — e.g. mismatched KYC — only after the fact, not before submission. | **Pre-submission Blocker:** Highlight mismatch immediately with fuzzy-match score. If ≥ 85% match, prompt instant Aadhaar demographic override without employer approval. |
 | **Pending Date of Exit (DoE)** | User applies for Form 19; portal rejects it because employer didn't update DoE. | **Smart Flow Rerouting:** System detects active status → blocks Full Settlement → activates "Employee Self-Declaration DoE" flow or alerts HR automatically with a 7-day SLA countdown. |
 | **Unmerged Multiple UANs** | Claim stalls due to disjointed service history across past employers. | **UAN Discovery Modal:** System queries Income Tax / PAN records on login, surfaces old Member IDs, and initiates a 1-click consolidation request prior to claim submission. |
 | **Illegible Cheque Upload** | Field officer rejects claim due to "Cancelled cheque not clear". | **Eliminate File Uploads:** Replace cheque uploads entirely with real-time NPCI/Account Aggregator verification. If manual upload is unavoidable, use client-side OCR to validate name and IFSC legibility before upload. |

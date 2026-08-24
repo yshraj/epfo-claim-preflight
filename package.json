@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:explanations": "node --env-file=.env.local scripts/generate-explanations.mjs",
+    "generate:explanations:dry-run": "node --env-file=.env.local scripts/generate-explanations.mjs --dry-run"
   },
   "dependencies": {
     "next": "^14.2.5",

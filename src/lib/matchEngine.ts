@@ -68,6 +68,7 @@ export function checkNameMatch(member: MemberProfile): CheckResult {
         ? "This is a small difference (e.g. a missing middle name). You can confirm the Aadhaar version instantly."
         : "This is a significant mismatch. You'll need to update your UAN or bank KYC before this claim can go through.",
     score: worstScore,
+    variant: status === "warn" ? "close" : worstScore >= 60 ? "moderate" : "severe",
   };
 }
 
@@ -89,6 +90,7 @@ export function checkDateOfExit(member: MemberProfile): CheckResult {
       title: "Date of Exit missing, but you're eligible to self-declare",
       detail: `Your employer hasn't marked an exit date, but it's been ${member.daysSinceLastContribution} days since your last contribution — past the 60-day threshold.`,
       fixHint: "You can self-declare your exit date now instead of waiting on your employer.",
+      variant: "self_declare_eligible",
     };
   }
 
@@ -98,6 +100,7 @@ export function checkDateOfExit(member: MemberProfile): CheckResult {
     title: "Date of Exit missing",
     detail: `Your employer hasn't marked an exit date yet, and only ${member.daysSinceLastContribution} days have passed since your last contribution (60 required to self-declare).`,
     fixHint: "We'll notify your employer with a 7-day reminder. Self-declaration unlocks after day 60.",
+    variant: "waiting_period",
   };
 }
 
@@ -119,6 +122,7 @@ export function checkBankAccount(member: MemberProfile): CheckResult {
       title: "Bank account name mismatch",
       detail: `The name on the bank account ("${member.bankName}") doesn't match your Aadhaar name ("${member.aadhaarName}").`,
       fixHint: "Update your bank KYC, or add a joint declaration linking the two names.",
+      variant: "name_mismatch",
     };
   }
 
@@ -128,6 +132,7 @@ export function checkBankAccount(member: MemberProfile): CheckResult {
     title: "Bank account inactive",
     detail: "The instant check could not verify an active account.",
     fixHint: "Add or update your bank account details in KYC before continuing.",
+    variant: "inactive",
   };
 }
 
