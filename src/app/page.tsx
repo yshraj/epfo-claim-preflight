@@ -11,7 +11,7 @@ export default function Home() {
       <div className="w-full">
         <IdentityGraph data={idleData} idle />
       </div>
-      <h1 className="text-2xl sm:text-3xl font-semibold">
+      <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
         Check your PF claim before you submit it.
       </h1>
       <p className="text-slate-600">

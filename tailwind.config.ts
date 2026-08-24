@@ -18,6 +18,11 @@ const config: Config = {
           700: "#1e40af",
         },
       },
+      fontFamily: {
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
     },
   },
   plugins: [],

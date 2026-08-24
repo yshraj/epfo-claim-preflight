@@ -40,8 +40,10 @@ export default function DashboardPage({
 
       <div className="bg-white border border-slate-200 rounded-xl p-5 mb-6">
         <div className="text-xs text-slate-500 mb-1">Total PF balance</div>
-        <div className="text-3xl font-semibold">₹{total.toLocaleString("en-IN")}</div>
-        <div className="text-xs text-slate-500 mt-2 flex gap-4">
+        <div className="font-display font-bold text-4xl tracking-tight text-slate-900">
+          ₹{total.toLocaleString("en-IN")}
+        </div>
+        <div className="text-xs text-slate-500 mt-2 flex gap-4 font-mono">
           <span>Employee: ₹{member.balance.employee.toLocaleString("en-IN")}</span>
           <span>Employer: ₹{member.balance.employer.toLocaleString("en-IN")}</span>
           <span>Pension: ₹{member.balance.pension.toLocaleString("en-IN")}</span>

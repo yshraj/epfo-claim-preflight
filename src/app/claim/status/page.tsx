@@ -47,14 +47,14 @@ export default function StatusPage({
 
   return (
     <div className="max-w-md mx-auto px-6 py-10">
-      <h1 className="text-xl font-semibold mb-1">Claim submitted</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight mb-1">Claim submitted</h1>
       <p className="text-sm text-slate-500 mb-6">
         {REASON_LABELS[reason] ?? reason} · {member.aadhaarName}
       </p>
 
       <dl className="grid grid-cols-2 gap-y-3 gap-x-4 border border-slate-200 rounded-lg p-4 mb-8 text-sm">
         <dt className="text-slate-500">Reference</dt>
-        <dd className="font-medium text-right">{reference}</dd>
+        <dd className="font-mono font-semibold text-right">{reference}</dd>
         <dt className="text-slate-500">Submitted</dt>
         <dd className="font-medium text-right">{submittedAt}</dd>
         <dt className="text-slate-500">Status</dt>

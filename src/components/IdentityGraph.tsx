@@ -19,7 +19,7 @@ export default function IdentityGraph({ data, idle = false }: { data: GraphData;
 
   return (
     <svg
-      viewBox="0 0 280 160"
+      viewBox="0 0 280 180"
       className="w-full max-w-xs mx-auto"
       role="img"
       aria-label={
