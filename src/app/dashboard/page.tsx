@@ -2,6 +2,7 @@ import Link from "next/link";
 import members from "@/data/mockMembers.json";
 import type { MemberProfile } from "@/types/member";
 import { overallReadiness, runPreflightChecks } from "@/lib/matchEngine";
+import { applyOverrides, parseOverrides } from "@/lib/claimState";
 
 const typedMembers = members as MemberProfile[];
 
@@ -16,9 +17,10 @@ function readinessBadge(status: "ready" | "fixable" | "blocked") {
 export default function DashboardPage({
   searchParams,
 }: {
-  searchParams: { uan?: string };
+  searchParams: { uan?: string; nameOverride?: string; doeOverride?: string };
 }) {
-  const member = typedMembers.find((m) => m.uan === searchParams.uan) ?? typedMembers[0];
+  const rawMember = typedMembers.find((m) => m.uan === searchParams.uan) ?? typedMembers[0];
+  const member = applyOverrides(rawMember, parseOverrides(searchParams));
   const results = runPreflightChecks(member);
   const readiness = overallReadiness(results);
   const badge = readinessBadge(readiness);

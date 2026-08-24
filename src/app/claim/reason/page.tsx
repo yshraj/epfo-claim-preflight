@@ -33,7 +33,7 @@ export default function ReasonPage({
             href={`/claim/preflight?uan=${uan}&reason=${r.key}`}
             className="flex flex-col items-center justify-center gap-2 border border-slate-200 rounded-lg p-5 text-center hover:border-brand-500 hover:bg-brand-50 transition-colors"
           >
-            <span className="text-2xl">{r.emoji}</span>
+            <span className="text-2xl" aria-hidden="true">{r.emoji}</span>
             <span className="text-sm font-medium">{r.label}</span>
           </Link>
         ))}
