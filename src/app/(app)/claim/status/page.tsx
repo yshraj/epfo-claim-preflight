@@ -4,6 +4,7 @@ import type { MemberProfile } from "@/types/member";
 import { overallReadiness, runPreflightChecks } from "@/lib/matchEngine";
 import { applyOverrides, buildClaimHref, parseOverrides } from "@/lib/claimState";
 import StatusTimeline from "./StatusTimeline";
+import GrievanceEscalation from "./GrievanceEscalation";
 import Container from "@/components/ui/Container";
 import { CheckCircle2 } from "lucide-react";
 
@@ -59,7 +60,7 @@ export default function StatusPage({
         {REASON_LABELS[reason] ?? reason} · {member.aadhaarName}
       </p>
 
-      <dl className="grid grid-cols-2 gap-y-3 gap-x-4 rounded-xl border border-slate-200 bg-white shadow-soft p-5 mb-2 text-sm">
+      <dl className="grid grid-cols-2 gap-y-3 gap-x-4 rounded-lg border border-slate-200 bg-white shadow-sm p-5 mb-2 text-sm">
         <dt className="text-slate-500">Reference</dt>
         <dd className="font-mono font-semibold text-right">{reference}</dd>
         <dt className="text-slate-500">Submitted</dt>
@@ -73,6 +74,7 @@ export default function StatusPage({
       </p>
 
       <StatusTimeline />
+      <GrievanceEscalation />
     </Container>
   );
 }

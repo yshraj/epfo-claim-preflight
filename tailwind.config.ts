@@ -8,17 +8,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // EPFO's own site leans deep blue/teal; kept intentionally distinct
-        // from any official government colour scheme to avoid implying endorsement.
         brand: {
-          50: "#f2f7fb",
-          100: "#e2edf7",
-          200: "#c3d9f0",
-          300: "#93b9e3",
-          500: "#2563eb",
-          600: "#1d4ed8",
-          700: "#1e40af",
-          900: "#1e2a5c",
+          50: "#F0F9FF",
+          100: "#E0F2FE",
+          200: "#BAE6FD",
+          300: "#7DD3FC",
+          400: "#38BDF8",
+          500: "#0EA5E9",
+          600: "#0284C7",
+          700: "#0369A1", // Strong trusted blue
+          800: "#075985",
+          900: "#0C4A6E", // Deep ink
+          950: "#082F49",
         },
       },
       fontFamily: {
@@ -27,7 +28,9 @@ const config: Config = {
         mono: ["var(--font-mono)", "monospace"],
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(15,23,42,.04), 0 8px 24px rgba(15,23,42,.06)",
+        soft: "0 2px 10px rgba(15,23,42,.04), 0 12px 32px rgba(15,23,42,.06)",
+        glow: "0 0 20px rgba(2,132,199,.15)",
+        card: "0 1px 3px rgba(15,23,42,.02), 0 4px 12px rgba(15,23,42,.04)",
       },
     },
   },

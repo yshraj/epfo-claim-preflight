@@ -1,18 +1,25 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import MockBanner from "@/components/MockBanner";
+import DemoSwitcher from "@/components/DemoSwitcher";
+import { SessionProvider } from "@/context/SessionContext";
 
-const display = Space_Grotesk({
+const display = Outfit({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "700"],
+  weight: ["400", "500", "600", "700"],
 });
-const body = Inter({ subsets: ["latin"], variable: "--font-body" });
+const body = Inter({ 
+  subsets: ["latin"], 
+  variable: "--font-body", 
+  weight: ["400", "500", "600"] 
+});
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  weight: ["500", "600"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -32,8 +39,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="font-body">
-        <MockBanner />
-        {children}
+        <SessionProvider>
+          <MockBanner />
+          {children}
+          <Suspense fallback={null}>
+            <DemoSwitcher />
+          </Suspense>
+        </SessionProvider>
       </body>
     </html>
   );

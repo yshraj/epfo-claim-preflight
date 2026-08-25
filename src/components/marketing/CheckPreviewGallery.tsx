@@ -20,13 +20,13 @@ const PREVIEWS = [
 ];
 
 const STYLES = {
-  pass: { card: "border-green-200 bg-green-50", icon: "text-green-600" },
-  fail: { card: "border-red-200 bg-red-50", icon: "text-red-600" },
+  pass: { card: "hover:border-brand-300 hover:bg-brand-50/50", icon: "text-slate-300 group-hover:text-brand-600" },
+  fail: { card: "hover:border-red-300 hover:bg-red-50/50", icon: "text-slate-300 group-hover:text-red-600" },
 };
 
 export default function CheckPreviewGallery() {
   return (
-    <section className="py-20">
+    <section className="py-20 bg-brand-50/30">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <p className="text-xs font-mono font-semibold tracking-wider text-brand-700 uppercase mb-2">
@@ -42,10 +42,10 @@ export default function CheckPreviewGallery() {
             const Icon = p.status === "pass" ? CheckCircle2 : AlertTriangle;
             return (
               <Reveal key={p.title} delay={i * 0.08}>
-                <div className={`border rounded-xl p-5 h-full ${style.card}`}>
-                  <Icon className={`h-5 w-5 mb-3 ${style.icon}`} aria-hidden="true" />
+                <div className={`group border border-slate-200 bg-white rounded-xl p-5 h-full transition-all duration-300 ${style.card}`}>
+                  <Icon className={`h-5 w-5 mb-3 transition-colors duration-300 ${style.icon}`} aria-hidden="true" />
                   <div className="font-medium text-sm text-slate-900">{p.title}</div>
-                  <div className="text-xs text-slate-600 mt-2">{p.detail}</div>
+                  <div className="text-xs text-slate-500 mt-2 transition-colors duration-300 group-hover:text-slate-700">{p.detail}</div>
                 </div>
               </Reveal>
             );

@@ -27,7 +27,7 @@ export default function ComparisonSection() {
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-6">
           <Reveal>
-            <div className="border border-slate-200 rounded-xl p-6 h-full">
+            <div className="border border-slate-200 rounded-lg p-6 h-full">
               <div className="text-xs font-mono font-semibold tracking-wider text-slate-400 uppercase mb-4">
                 Today
               </div>
@@ -42,7 +42,7 @@ export default function ComparisonSection() {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="border border-brand-200 bg-brand-50/40 rounded-xl p-6 h-full">
+            <div className="border border-brand-200 bg-brand-50/40 rounded-lg p-6 h-full">
               <div className="text-xs font-mono font-semibold tracking-wider text-brand-700 uppercase mb-4">
                 This prototype
               </div>

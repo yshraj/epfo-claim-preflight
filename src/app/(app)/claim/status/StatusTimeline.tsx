@@ -1,81 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { CheckCircle2, CircleDashed } from "lucide-react";
 
-const STAGES = [
-  "Claim submitted",
-  "Documents checked",
-  "Processing",
-  "Settlement",
-  "Amount credited",
-];
-
-// Simulated, timed progression through claim states — the visible
-// "flow" that replaces EPFO's current silence-for-20-days pattern.
-// This is a mocked timeline; no real settlement occurs, and no network
-// call is simulated — the delay is honest UI pacing over an already-
-// known sequence, not a fake fetch.
-export default function StatusTimeline() {
-  const [activeStage, setActiveStage] = useState(0);
-
-  useEffect(() => {
-    if (activeStage >= STAGES.length - 1) return;
-    const timer = setTimeout(() => setActiveStage((s) => s + 1), 900);
-    return () => clearTimeout(timer);
-  }, [activeStage]);
-
-  const finished = activeStage >= STAGES.length - 1;
+export default function StatusTimeline({ isDelayed = false }: { isDelayed?: boolean }) {
+  const STAGES = [
+    { title: "Claim submitted", date: "18 Aug 2026", status: "complete" },
+    { title: "Documents verified", date: "19 Aug 2026", status: "complete" },
+    { title: "Regional processing", date: "In progress", status: "current" },
+    { title: "Settlement approved", date: "", status: "pending" },
+    { title: "Amount credited", date: "", status: "pending" },
+  ];
 
   return (
-    <div>
-      <ol className="flex flex-col gap-0">
+    <div className="bg-white border border-slate-200 rounded-lg p-6 mb-8">
+      <div className="font-semibold text-slate-900 mb-6">Status timeline</div>
+      
+      <div className="relative border-l-2 border-slate-100 ml-3 space-y-6">
         {STAGES.map((stage, i) => {
-          const done = i < activeStage;
-          const current = i === activeStage;
-          const isLast = i === STAGES.length - 1;
-          const stateLabel = done || (current && finished) ? "complete" : current ? "in progress" : "pending";
-          const marker = done || (current && finished) ? "✓" : current ? "●" : "○";
+          const isComplete = stage.status === "complete";
+          const isCurrent = stage.status === "current";
+          
           return (
-            <li
-              key={stage}
-              aria-label={`${stage}, ${stateLabel}`}
-              className="flex gap-3"
-            >
-              <div className="flex flex-col items-center">
-                <div
-                  className={`h-4 w-4 rounded-full border-2 shrink-0 flex items-center justify-center text-[8px] transition-colors duration-500 ${
-                    done || (current && finished)
-                      ? "bg-brand-600 border-brand-600 text-white"
-                      : current
-                        ? "bg-white border-brand-500 text-brand-600"
-                        : "bg-white border-slate-300 text-transparent"
-                  }`}
-                >
-                  {marker}
-                </div>
-                {!isLast && (
-                  <div
-                    className={`w-0.5 flex-1 min-h-8 transition-colors duration-500 ${
-                      i < activeStage ? "bg-brand-600" : "bg-slate-200"
-                    }`}
-                  />
+            <div key={stage.title} className="relative pl-6">
+              <div className="absolute -left-[9px] top-1 bg-white">
+                {isComplete ? (
+                  <CheckCircle2 className="h-4 w-4 text-brand-600" />
+                ) : isCurrent ? (
+                  <CircleDashed className="h-4 w-4 text-amber-500 animate-[spin_4s_linear_infinite]" />
+                ) : (
+                  <div className="h-4 w-4 rounded-full border-2 border-slate-200 bg-white" />
                 )}
               </div>
-              <div
-                className={`pb-8 text-sm ${
-                  done || current ? "text-slate-900" : "text-slate-400"
-                }`}
-              >
-                {stage}
+              <div className="flex flex-col">
+                <span className={`text-sm font-medium ${isCurrent ? 'text-brand-900' : isComplete ? 'text-slate-900' : 'text-slate-500'}`}>
+                  {stage.title}
+                </span>
+                {stage.date && (
+                  <span className="text-xs text-slate-500 mt-1">{stage.date}</span>
+                )}
               </div>
-            </li>
+            </div>
           );
         })}
-      </ol>
+      </div>
 
-      <p className="text-sm text-slate-600 border-t border-slate-200 pt-4">
-        You knew about the problem before EPFO did.
-      </p>
+      <div className="mt-8 pt-6 border-t border-slate-100">
+        <h4 className="font-medium text-slate-900 mb-2">What happens next?</h4>
+        <p className="text-sm text-slate-600">
+          Your claim is currently with the regional processing team. 
+          No action is required from you right now. 
+          {isDelayed ? "" : " We will notify you once the settlement is approved."}
+        </p>
+      </div>
     </div>
   );
 }

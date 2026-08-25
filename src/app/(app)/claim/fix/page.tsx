@@ -44,7 +44,9 @@ export default function FixPage({
       <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
         Fix name mismatch
       </h1>
-      <p className="text-sm text-slate-500 mb-8">{nameCheck.detail}</p>
+      <p className="text-sm text-slate-500 mb-8">
+        We noticed a small difference in your name. This may prevent your claim from being processed.
+      </p>
 
       <FixNameForm
         aadhaarName={member.aadhaarName}

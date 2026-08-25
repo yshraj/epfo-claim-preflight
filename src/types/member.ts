@@ -1,5 +1,23 @@
 // Shape of a mock member record. All data behind this type is synthetic —
 // see docs/EPFO_Hackathon_Build_Plan.md section 3.
+export interface Activity {
+  id: string;
+  date: string;
+  title: string;
+  description?: string;
+  type: "claim" | "kyc" | "profile" | "bank" | "uan";
+}
+
+export interface EmploymentDetail {
+  id: string;
+  employer: string;
+  startDate: string;
+  endDate: string | "Present";
+  status: "active" | "previous";
+  pfBalance: number;
+  isConsolidated?: boolean;
+}
+
 export interface MemberProfile {
   id: string;
   uan: string;
@@ -25,6 +43,8 @@ export interface MemberProfile {
     bank: "verified" | "pending";
   };
   scenarioLabel: string;
+  recentActivities?: Activity[];
+  employmentHistory?: EmploymentDetail[];
 }
 
 export type ClaimReason =

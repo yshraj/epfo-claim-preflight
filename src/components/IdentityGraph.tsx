@@ -1,7 +1,7 @@
 import type { GraphData, GraphStatus } from "@/lib/identityGraph";
 
 const STATUS_COLOR: Record<GraphStatus, { stroke: string; fill: string; text: string }> = {
-  pass: { stroke: "#22c55e", fill: "#22c55e", text: "#166534" },
+  pass: { stroke: "#0D9488", fill: "#0D9488", text: "#0f766e" },
   warn: { stroke: "#f59e0b", fill: "#f59e0b", text: "#92400e" },
   fail: { stroke: "#ef4444", fill: "#ef4444", text: "#991b1b" },
 };

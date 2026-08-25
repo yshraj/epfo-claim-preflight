@@ -6,16 +6,23 @@ import type { HTMLAttributes } from "react";
 export default function Container({
   className,
   size = "wide",
+  children,
   ...props
-}: HTMLAttributes<HTMLDivElement> & { size?: "narrow" | "wide" }) {
+}: HTMLAttributes<HTMLDivElement> & { children: React.ReactNode, size?: "narrow" | "default" | "wide" }) {
   return (
     <div
       className={cn(
-        "mx-auto px-6",
-        size === "narrow" ? "max-w-md" : "max-w-6xl",
-        className,
+        "mx-auto w-full px-5 sm:px-8 md:px-12",
+        {
+          "max-w-3xl": size === "narrow",
+          "max-w-5xl": size === "default",
+          "max-w-7xl": size === "wide",
+        },
+        className
       )}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }

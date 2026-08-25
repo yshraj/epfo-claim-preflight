@@ -45,28 +45,27 @@ export function checkNameMatch(member: MemberProfile): CheckResult {
     return {
       key: "name_match",
       status: "pass",
-      title: "Name matches across Aadhaar, UAN and bank records",
-      detail: `"${member.aadhaarName}" matches on all three records.`,
+      title: "Identity verified",
+      detail: `Your name matches exactly across Aadhaar, EPFO, and bank records.`,
       fixHint: "",
       score: worstScore,
     };
   }
 
-  const status = worstScore >= 85 ? "warn" : "fail";
-  const mismatchedWith =
-    scoreUanVsAadhaar < scoreBankVsAadhaar
-      ? `your UAN record ("${member.uanName}")`
-      : `your bank account ("${member.bankName}")`;
+  const isMinor = worstScore >= 80;
+  const status = isMinor ? "warn" : "fail";
+  const source = scoreUanVsAadhaar < scoreBankVsAadhaar ? "EPFO" : "Bank";
+  const mismatchedName = scoreUanVsAadhaar < scoreBankVsAadhaar ? member.uanName : member.bankName;
 
   return {
     key: "name_match",
     status,
-    title: "Name mismatch found",
-    detail: `Your Aadhaar name ("${member.aadhaarName}") doesn't fully match ${mismatchedWith}. Match score: ${worstScore}%.`,
+    title: isMinor ? "Minor name variation detected" : "Significant name difference detected",
+    detail: `Aadhaar: ${member.aadhaarName} | ${source}: ${mismatchedName}`,
     fixHint:
-      worstScore >= 85
-        ? "This is a small difference (e.g. a missing middle name). You can confirm the Aadhaar version instantly."
-        : "This is a significant mismatch. You'll need to update your UAN or bank KYC before this claim can go through.",
+      isMinor
+        ? "Recommended: Fixing this before submission may help avoid a preventable rejection."
+        : "Action required: This difference requires correction before your claim can be processed.",
     score: worstScore,
     variant: status === "warn" ? "close" : worstScore >= 60 ? "moderate" : "severe",
   };

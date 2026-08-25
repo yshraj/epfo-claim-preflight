@@ -6,14 +6,14 @@ import type { ButtonHTMLAttributes } from "react";
 // <Link> directly (most CTAs in this app are navigational, not native
 // buttons) without pulling in a Slot/asChild dependency.
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:opacity-60 disabled:pointer-events-none",
+  "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        primary: "bg-brand-600 text-white hover:bg-brand-700",
-        secondary: "border border-slate-300 text-slate-700 hover:bg-slate-50",
+        primary: "bg-brand-600 text-white hover:bg-brand-700 shadow-soft hover:shadow-glow",
+        secondary: "border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 shadow-sm",
         ghost: "text-slate-700 hover:bg-slate-100",
-        amber: "bg-amber-600 text-white hover:bg-amber-700",
+        amber: "bg-amber-600 text-white hover:bg-amber-700 shadow-soft",
       },
       size: {
         default: "px-6 py-3 text-sm",

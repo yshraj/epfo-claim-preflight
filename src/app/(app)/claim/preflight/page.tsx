@@ -7,16 +7,19 @@ import { applyOverrides, buildClaimHref, parseOverrides } from "@/lib/claimState
 import { resultsToGraphData } from "@/lib/identityGraph";
 import IdentityGraph from "@/components/IdentityGraph";
 import Container from "@/components/ui/Container";
+import MatchScoreMeter from "@/components/ui/MatchScoreMeter";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { CheckCircle2, AlertTriangle, XCircle, type LucideIcon } from "lucide-react";
+import PreflightSequence from "./PreflightSequence";
+import SubmitClaimButton from "@/components/claim/SubmitClaimButton";
 
 const typedMembers = members as MemberProfile[];
 
 const STATUS_STYLES: Record<CheckResult["status"], { icon: LucideIcon; iconColor: string; card: string }> = {
-  pass: { icon: CheckCircle2, iconColor: "text-green-600", card: "border-green-200 bg-green-50" },
-  warn: { icon: AlertTriangle, iconColor: "text-amber-600", card: "border-amber-200 bg-amber-50" },
-  fail: { icon: XCircle, iconColor: "text-red-600", card: "border-red-200 bg-red-50" },
+  pass: { icon: CheckCircle2, iconColor: "text-slate-300 group-hover:text-brand-600", card: "border-slate-200 bg-white hover:border-brand-300 hover:bg-brand-50/50" },
+  warn: { icon: AlertTriangle, iconColor: "text-slate-300 group-hover:text-amber-600", card: "border-slate-200 bg-white hover:border-amber-300 hover:bg-amber-50/50" },
+  fail: { icon: XCircle, iconColor: "text-slate-300 group-hover:text-red-600", card: "border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/50" },
 };
 
 // "Why this matters" text is looked up from a static, precomputed cache
@@ -56,24 +59,25 @@ export default async function PreflightPage({
   // regardless of the coarser overall readiness label.
   const nameCheck = checks.find((c) => c.key === "name_match")!;
   const doeCheck = checks.find((c) => c.key === "date_of_exit")!;
-  const otherChecksPass = checks
-    .filter((c) => c.key !== "name_match")
-    .every((c) => c.status === "pass");
-  const canFixName = nameCheck.status !== "pass" && otherChecksPass;
+  // For the hackathon demo, if there's a name issue, we allow fixing it even if
+  // other checks fail. It will route back here sequentially to handle remaining issues.
+  const canFixName = nameCheck.status !== "pass";
   const wasJustCorrected = Boolean(overrides.nameOverride || overrides.doeOverride);
+  const numFails = checks.filter(c => c.status !== "pass").length;
 
   return (
     <Container size="narrow" className="py-16">
-      <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
-        Pre-flight check
-      </h1>
-      <p className="text-sm text-slate-500 mb-8">
-        {wasJustCorrected
-          ? "Checking again with your corrected records…"
-          : "Running 3 checks against your records before you submit."}
-      </p>
+      <PreflightSequence wasJustCorrected={wasJustCorrected} readiness={readiness} numFails={numFails}>
+        <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
+          Before you submit
+        </h1>
+        <p className="text-sm text-slate-500 mb-8">
+          {wasJustCorrected
+            ? "Re-checking your information..."
+            : "We'll check the information most likely to delay your claim."}
+        </p>
 
-      <div className="mb-8 bg-white border border-slate-200 rounded-2xl shadow-soft p-6">
+      <div className="mb-8 bg-white border border-slate-200 rounded-lg p-6">
         <IdentityGraph data={graphData} />
       </div>
 
@@ -85,21 +89,40 @@ export default async function PreflightPage({
               key={r.key}
               role="status"
               aria-label={`${r.title}: ${r.status}`}
-              className={`border rounded-xl p-4 ${style.card}`}
+              className={`group border rounded-lg p-4 transition-all duration-300 ${style.card}`}
             >
               <div className="flex items-start gap-3">
-                <style.icon className={`h-5 w-5 shrink-0 mt-0.5 ${style.iconColor}`} aria-hidden="true" />
+                <style.icon className={`h-5 w-5 shrink-0 mt-0.5 transition-colors duration-300 ${style.iconColor}`} aria-hidden="true" />
                 <div>
                   <div className="font-medium text-sm text-slate-900">{r.title}</div>
-                  <div className="text-xs text-slate-600 mt-1">{r.detail}</div>
+                  <div className="text-sm text-slate-600 mt-1 font-mono">
+                    {r.key === "name_match" && r.status !== "pass" ? (
+                      <div className="flex flex-col gap-1 my-3 p-3 bg-slate-50 border border-slate-100 rounded-md">
+                        {r.detail.split(' | ').map(line => (
+                           <div key={line} className="flex justify-between">
+                             <span className="text-slate-500">{line.split(': ')[0]}</span>
+                             <span className="font-medium text-slate-900">{line.split(': ')[1]}</span>
+                           </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <span>{r.detail}</span>
+                    )}
+                  </div>
+                  {typeof r.score === "number" && r.status !== "pass" && <MatchScoreMeter score={r.score} />}
                   {r.fixHint && (
                     <div className="text-xs text-slate-500 mt-2 italic">{r.fixHint}</div>
                   )}
                   {r.whyItMatters && (
-                    <div className="text-xs text-slate-600 mt-2 border-t border-slate-200/70 pt-2">
-                      <span className="font-medium">Why this matters: </span>
-                      {r.whyItMatters}
-                    </div>
+                    <details className="text-xs text-slate-600 mt-3 pt-3 border-t border-slate-200/70 group/details cursor-pointer">
+                      <summary className="font-medium text-slate-700 hover:text-brand-600 outline-none list-none flex items-center gap-1">
+                        <span className="w-4 h-4 inline-flex items-center justify-center rounded-full bg-slate-100 text-slate-500 font-bold text-[10px] group-hover/details:bg-brand-100 group-hover/details:text-brand-700">?</span>
+                        Why are you seeing this?
+                      </summary>
+                      <div className="mt-2 pl-5 leading-relaxed">
+                        {r.whyItMatters}
+                      </div>
+                    </details>
                   )}
                   {r.key === "date_of_exit" && r.status === "warn" && (
                     <Link
@@ -124,12 +147,11 @@ export default async function PreflightPage({
       </div>
 
       {readiness === "ready" && (
-        <Link
-          href={buildClaimHref("/claim/status", { uan: member.uan, reason })}
-          className={cn(buttonVariants({ size: "lg" }), "w-full")}
-        >
-          Submit claim
-        </Link>
+        <div className="bg-brand-50 border border-brand-200 rounded-lg p-6 text-center">
+          <h3 className="font-display font-bold text-xl text-brand-900 mb-2">You&apos;re ready to submit.</h3>
+          <p className="text-sm text-brand-700 mb-6">All pre-flight checks passed successfully.</p>
+          <SubmitClaimButton href={buildClaimHref("/claim/status", { uan: member.uan, reason })} reason={reason} />
+        </div>
       )}
 
       {readiness !== "ready" && canFixName && (
@@ -142,7 +164,7 @@ export default async function PreflightPage({
       )}
 
       {readiness !== "ready" && !canFixName && doeCheck.status !== "fail" && (
-        <div className="text-center text-sm text-slate-600 border border-slate-200 rounded-xl p-4">
+        <div className="text-center text-sm text-slate-600 border border-slate-200 rounded-lg p-4">
           This claim can&apos;t be submitted yet — resolve the issue(s) above first.
           In a full build, each remaining fail state routes to its own guided
           fix (e.g. bank KYC update).
@@ -150,11 +172,12 @@ export default async function PreflightPage({
       )}
 
       {readiness !== "ready" && !canFixName && doeCheck.status === "fail" && (
-        <div className="text-center text-sm text-slate-600 border border-slate-200 rounded-xl p-4">
+        <div className="text-center text-sm text-slate-600 border border-slate-200 rounded-lg p-4">
           This claim can&apos;t be submitted yet — your employer needs to confirm
           your exit date, or check back once 60 days have passed to self-declare it.
         </div>
       )}
+      </PreflightSequence>
     </Container>
   );
 }

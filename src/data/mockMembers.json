@@ -12,10 +12,55 @@
     "dateOfExit": "2026-08-01",
     "exitDeclaredBy": "employer",
     "daysSinceLastContribution": 12,
-    "balance": { "employee": 340000, "employer": 350000, "pension": 61000 },
+    "balance": {
+      "employee": 340000,
+      "employer": 350000,
+      "pension": 61000
+    },
     "previousUans": [],
-    "kycStatus": { "aadhaar": "verified", "pan": "verified", "bank": "verified" },
-    "scenarioLabel": "Clean profile — every check passes"
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "verified"
+    },
+    "scenarioLabel": "Clean profile — every check passes",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100911112222",
+        "employer": "Nimbus Softworks Pvt Ltd",
+        "startDate": "2023-04-01",
+        "endDate": "2026-08-01",
+        "status": "previous",
+        "pfBalance": 751000,
+        "isConsolidated": true
+      }
+    ]
   },
   {
     "id": "name-mismatch",
@@ -30,10 +75,66 @@
     "dateOfExit": "2026-07-15",
     "exitDeclaredBy": "employer",
     "daysSinceLastContribution": 8,
-    "balance": { "employee": 210000, "employer": 220000, "pension": 52000 },
-    "previousUans": ["100987654321"],
-    "kycStatus": { "aadhaar": "verified", "pan": "verified", "bank": "pending" },
-    "scenarioLabel": "Name mismatch — hero demo case"
+    "balance": {
+      "employee": 210000,
+      "employer": 220000,
+      "pension": 52000
+    },
+    "previousUans": [
+      "100987654321"
+    ],
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "pending"
+    },
+    "scenarioLabel": "Name mismatch — hero demo case",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100912345678",
+        "employer": "Acme Textiles Pvt Ltd",
+        "startDate": "2023-04-01",
+        "endDate": "2026-07-15",
+        "status": "previous",
+        "pfBalance": 482000,
+        "isConsolidated": true
+      },
+      {
+        "id": "100987654321",
+        "employer": "XYZ Technologies",
+        "startDate": "2020-01-01",
+        "endDate": "2023-03-31",
+        "status": "previous",
+        "pfBalance": 72450,
+        "isConsolidated": false
+      }
+    ]
   },
   {
     "id": "missing-doe",
@@ -48,10 +149,55 @@
     "dateOfExit": null,
     "exitDeclaredBy": null,
     "daysSinceLastContribution": 74,
-    "balance": { "employee": 158000, "employer": 160000, "pension": 40000 },
+    "balance": {
+      "employee": 158000,
+      "employer": 160000,
+      "pension": 40000
+    },
     "previousUans": [],
-    "kycStatus": { "aadhaar": "verified", "pan": "verified", "bank": "verified" },
-    "scenarioLabel": "Missing Date of Exit, 74 days since contribution — self-declare eligible"
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "verified"
+    },
+    "scenarioLabel": "Missing Date of Exit, 74 days since contribution — self-declare eligible",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100933334444",
+        "employer": "Coastal Logistics Ltd",
+        "startDate": "2023-04-01",
+        "endDate": "Present",
+        "status": "active",
+        "pfBalance": 358000,
+        "isConsolidated": true
+      }
+    ]
   },
   {
     "id": "bank-mismatch",
@@ -66,10 +212,55 @@
     "dateOfExit": "2026-06-30",
     "exitDeclaredBy": "employer",
     "daysSinceLastContribution": 40,
-    "balance": { "employee": 95000, "employer": 97000, "pension": 21000 },
+    "balance": {
+      "employee": 95000,
+      "employer": 97000,
+      "pension": 21000
+    },
     "previousUans": [],
-    "kycStatus": { "aadhaar": "verified", "pan": "verified", "bank": "pending" },
-    "scenarioLabel": "Bank account name doesn't match — instant check fails"
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "pending"
+    },
+    "scenarioLabel": "Bank account name doesn't match — instant check fails",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100955556666",
+        "employer": "Zenith Manufacturing Co",
+        "startDate": "2023-04-01",
+        "endDate": "2026-06-30",
+        "status": "previous",
+        "pfBalance": 213000,
+        "isConsolidated": true
+      }
+    ]
   },
   {
     "id": "unmerged-uan",
@@ -84,10 +275,76 @@
     "dateOfExit": "2026-05-15",
     "exitDeclaredBy": "employer",
     "daysSinceLastContribution": 30,
-    "balance": { "employee": 275000, "employer": 280000, "pension": 58000 },
-    "previousUans": ["100911119999", "100922228888"],
-    "kycStatus": { "aadhaar": "verified", "pan": "verified", "bank": "verified" },
-    "scenarioLabel": "Two old unmerged UANs from previous employers"
+    "balance": {
+      "employee": 275000,
+      "employer": 280000,
+      "pension": 58000
+    },
+    "previousUans": [
+      "100911119999",
+      "100922228888"
+    ],
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "verified"
+    },
+    "scenarioLabel": "Two old unmerged UANs from previous employers",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100977778888",
+        "employer": "Bluepeak Retail Pvt Ltd",
+        "startDate": "2023-04-01",
+        "endDate": "2026-05-15",
+        "status": "previous",
+        "pfBalance": 613000,
+        "isConsolidated": true
+      },
+      {
+        "id": "100911119999",
+        "employer": "XYZ Technologies",
+        "startDate": "2020-01-01",
+        "endDate": "2023-03-31",
+        "status": "previous",
+        "pfBalance": 72450,
+        "isConsolidated": false
+      },
+      {
+        "id": "100922228888",
+        "employer": "DEF Services",
+        "startDate": "2018-01-01",
+        "endDate": "2019-12-31",
+        "status": "previous",
+        "pfBalance": 34000,
+        "isConsolidated": false
+      }
+    ]
   },
   {
     "id": "fully-broken",
@@ -102,9 +359,65 @@
     "dateOfExit": null,
     "exitDeclaredBy": null,
     "daysSinceLastContribution": 96,
-    "balance": { "employee": 132000, "employer": 134000, "pension": 30000 },
-    "previousUans": ["100911100000"],
-    "kycStatus": { "aadhaar": "verified", "pan": "pending", "bank": "pending" },
-    "scenarioLabel": "Multiple failures at once — 'before' screenshot case"
+    "balance": {
+      "employee": 132000,
+      "employer": 134000,
+      "pension": 30000
+    },
+    "previousUans": [
+      "100911100000"
+    ],
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "pending",
+      "bank": "pending"
+    },
+    "scenarioLabel": "Multiple failures at once — 'before' screenshot case",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "24 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "22 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      },
+      {
+        "id": "act-3",
+        "date": "16 Aug 2026",
+        "title": "KYC updated",
+        "type": "kyc"
+      },
+      {
+        "id": "act-4",
+        "date": "12 Aug 2026",
+        "title": "UAN profile accessed",
+        "type": "profile"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100999990000",
+        "employer": "Greenfield Agro Exports",
+        "startDate": "2023-04-01",
+        "endDate": "Present",
+        "status": "active",
+        "pfBalance": 296000,
+        "isConsolidated": true
+      },
+      {
+        "id": "100911100000",
+        "employer": "XYZ Technologies",
+        "startDate": "2020-01-01",
+        "endDate": "2023-03-31",
+        "status": "previous",
+        "pfBalance": 72450,
+        "isConsolidated": false
+      }
+    ]
   }
 ]
