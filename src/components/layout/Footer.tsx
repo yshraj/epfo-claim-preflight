@@ -12,6 +12,9 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-2">
+          <Link href="/services" className="hover:text-slate-900 transition-colors">
+            Services
+          </Link>
           <Link href="/#how-it-works" className="hover:text-slate-900 transition-colors">
             How it works
           </Link>

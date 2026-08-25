@@ -8,7 +8,7 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { Wallet } from "lucide-react";
+import { Wallet, LayoutGrid, ArrowRight } from "lucide-react";
 
 const typedMembers = members as MemberProfile[];
 
@@ -63,6 +63,23 @@ export default function DashboardPage({
         className={cn(buttonVariants({ size: "lg" }), "w-full")}
       >
         Withdraw funds
+      </Link>
+
+      <Link
+        href="/services"
+        className="group flex items-center justify-between gap-3 border border-slate-200 rounded-xl p-4 mt-6 hover:border-brand-500 hover:bg-brand-50/60 transition-all"
+      >
+        <div className="flex items-center gap-3">
+          <LayoutGrid className="h-4 w-4 text-slate-400" aria-hidden="true" />
+          <div>
+            <div className="text-sm font-medium text-slate-900">Explore other EPFO services</div>
+            <div className="text-xs text-slate-500">Passbook, KYC, grievances, pension &amp; more</div>
+          </div>
+        </div>
+        <ArrowRight
+          className="h-4 w-4 text-slate-300 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all shrink-0"
+          aria-hidden="true"
+        />
       </Link>
     </Container>
   );

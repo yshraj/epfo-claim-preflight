@@ -57,8 +57,8 @@ export default function ServiceBreadthTeaser() {
             </Reveal>
           ))}
         </div>
-        <Link href="/login" className={cn(buttonVariants({ variant: "secondary" }))}>
-          Log in to explore all EPFO services
+        <Link href="/services" className={cn(buttonVariants({ variant: "secondary" }))}>
+          Explore all EPFO services
         </Link>
       </div>
     </section>
