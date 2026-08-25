@@ -31,3 +31,16 @@ export function resultsToGraphData(results: CheckResult[]): GraphData {
       : "pass";
   return { edges, overallStatus };
 }
+
+// Placeholder shape for the idle/ambient hero display, where there's no
+// real member yet — same 3 labels as a real check, so the diagram reads
+// as "this is what it looks like," not an empty/broken component.
+// IdentityGraph ignores `status` entirely when rendered with idle=true.
+export const IDLE_GRAPH_DATA: GraphData = {
+  edges: [
+    { id: "name_match", label: "Identity", status: "pass" },
+    { id: "date_of_exit", label: "Exit Date", status: "pass" },
+    { id: "bank_account", label: "Bank", status: "pass" },
+  ],
+  overallStatus: "pass",
+};
