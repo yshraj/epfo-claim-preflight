@@ -4,6 +4,9 @@ import type { MemberProfile } from "@/types/member";
 import { checkNameMatch } from "@/lib/matchEngine";
 import { applyOverrides, buildClaimHref, parseOverrides } from "@/lib/claimState";
 import FixNameForm from "./FixNameForm";
+import Container from "@/components/ui/Container";
+import { buttonVariants } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 
 const typedMembers = members as MemberProfile[];
 
@@ -24,22 +27,24 @@ export default function FixPage({
 
   if (nameCheck.status === "pass") {
     return (
-      <div className="max-w-md mx-auto px-6 py-10 text-center">
+      <Container size="narrow" className="py-16 text-center">
         <p className="text-slate-600 mb-6">Nothing to fix here — you&apos;re good to go.</p>
         <Link
           href={buildClaimHref("/claim/preflight", { uan: member.uan, reason })}
-          className="inline-block bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+          className={cn(buttonVariants())}
         >
           Back to pre-flight check
         </Link>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="max-w-md mx-auto px-6 py-10">
-      <h1 className="text-xl font-semibold mb-1">Fix name mismatch</h1>
-      <p className="text-sm text-slate-500 mb-6">{nameCheck.detail}</p>
+    <Container size="narrow" className="py-16">
+      <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
+        Fix name mismatch
+      </h1>
+      <p className="text-sm text-slate-500 mb-8">{nameCheck.detail}</p>
 
       <FixNameForm
         aadhaarName={member.aadhaarName}
@@ -47,6 +52,6 @@ export default function FixPage({
         uan={member.uan}
         reason={reason}
       />
-    </div>
+    </Container>
   );
 }

@@ -4,6 +4,8 @@ import type { MemberProfile } from "@/types/member";
 import { overallReadiness, runPreflightChecks } from "@/lib/matchEngine";
 import { applyOverrides, buildClaimHref, parseOverrides } from "@/lib/claimState";
 import StatusTimeline from "./StatusTimeline";
+import Container from "@/components/ui/Container";
+import { CheckCircle2 } from "lucide-react";
 
 const typedMembers = members as MemberProfile[];
 
@@ -46,13 +48,18 @@ export default function StatusPage({
   });
 
   return (
-    <div className="max-w-md mx-auto px-6 py-10">
-      <h1 className="font-display text-2xl font-bold tracking-tight mb-1">Claim submitted</h1>
+    <Container size="narrow" className="py-16">
+      <div className="flex items-center gap-2 mb-2">
+        <CheckCircle2 className="h-6 w-6 text-green-600" aria-hidden="true" />
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-950">
+          Claim submitted
+        </h1>
+      </div>
       <p className="text-sm text-slate-500 mb-6">
         {REASON_LABELS[reason] ?? reason} · {member.aadhaarName}
       </p>
 
-      <dl className="grid grid-cols-2 gap-y-3 gap-x-4 border border-slate-200 rounded-lg p-4 mb-8 text-sm">
+      <dl className="grid grid-cols-2 gap-y-3 gap-x-4 rounded-xl border border-slate-200 bg-white shadow-soft p-5 mb-2 text-sm">
         <dt className="text-slate-500">Reference</dt>
         <dd className="font-mono font-semibold text-right">{reference}</dd>
         <dt className="text-slate-500">Submitted</dt>
@@ -61,11 +68,11 @@ export default function StatusPage({
         <dd className="font-medium text-right text-brand-700">Processing</dd>
       </dl>
 
-      <p className="text-xs text-slate-400 mb-6">
+      <p className="text-xs text-slate-400 mb-8">
         Synthetic reference number for this prototype — no real claim was filed.
       </p>
 
       <StatusTimeline />
-    </div>
+    </Container>
   );
 }
