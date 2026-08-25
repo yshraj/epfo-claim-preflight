@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     "Hackathon prototype: catch PF claim rejections before you submit. Independent, unaffiliated, simulated data only.",
 };
 
+// The two route-group layouts ((marketing) and (app)) each supply their
+// own header/footer/<main> — this root layout only owns what's truly
+// global: fonts and the persistent mock-data disclosure banner.
 export default function RootLayout({
   children,
 }: {
@@ -30,7 +33,7 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="font-body">
         <MockBanner />
-        <main className="min-h-screen">{children}</main>
+        {children}
       </body>
     </html>
   );
