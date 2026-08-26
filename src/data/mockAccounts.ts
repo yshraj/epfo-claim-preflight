@@ -183,7 +183,9 @@ export const MOCK_ACCOUNTS: Record<string, MockAccount> = {
     notifications: [
       { id: "notif-1", date: "24 Aug 2026", title: "Review previous PF account", message: "You have unconsolidated PF balances.", read: false, link: "/dashboard/employment" }
     ],
-    documents: [],
+    documents: [
+      { id: "doc-1", name: "Previous Employer NOC", source: "employer", status: "processing", dateAdded: "2026-08-24" },
+    ],
     claims: [],
   },
   "delayed-claim": {
@@ -236,7 +238,14 @@ export const MOCK_ACCOUNTS: Record<string, MockAccount> = {
     ],
     documents: [],
     claims: [
-      { id: "CLM-9912", type: "Form 31 (Advance)", dateSubmitted: "2026-08-01", status: "processing", amount: 50000 }
+      {
+        id: "CLM-9912",
+        type: "Form 31 (Advance)",
+        dateSubmitted: "2026-08-01",
+        status: "processing",
+        amount: 50000,
+        note: "Your claim has exceeded the standard 20-day processing window. No action is required from you right now.",
+      }
     ],
   },
   "multiple-issues": {
@@ -286,5 +295,129 @@ export const MOCK_ACCOUNTS: Record<string, MockAccount> = {
     ],
     documents: [],
     claims: [],
-  }
+  },
+  "claim-rejected": {
+    id: "claim-rejected",
+    email: "meera.demo@example.test",
+    phone: "+91 9876543215",
+    passwordHash: "demo1234",
+    fixedOtp: "123456",
+    uan: "100955556666",
+    aadhaarName: "MEERA IYER",
+    uanName: "MEERA IYER",
+    bankName: "MEERA IYER",
+    dobAadhaar: "1993-06-20",
+    dobUan: "1993-06-20",
+    bankAccountStatus: "active",
+    employer: "Skyline Manufacturing Ltd",
+    dateOfExit: "2026-07-01",
+    exitDeclaredBy: "employer",
+    daysSinceLastContribution: 40,
+    balance: {
+      employee: 190000,
+      employer: 195000,
+      pension: 45000,
+    },
+    previousUans: [],
+    kycStatus: {
+      aadhaar: "verified",
+      pan: "verified",
+      bank: "verified",
+    },
+    digiLockerConnected: true,
+    digiLockerSyncDate: "2026-08-10",
+    scenarioLabel: "Claim rejected — needs resubmission",
+    recentActivities: [
+      { id: "act-1", date: "10 Aug 2026", title: "Claim rejected", type: "claim" },
+      { id: "act-2", date: "20 Jul 2026", title: "Claim submitted", type: "claim" },
+    ],
+    employmentHistory: [
+      {
+        id: "100955556666",
+        employer: "Skyline Manufacturing Ltd",
+        startDate: "2022-02-01",
+        endDate: "2026-07-01",
+        status: "previous",
+        pfBalance: 385000,
+        isConsolidated: true,
+      },
+    ],
+    notifications: [
+      { id: "notif-1", date: "10 Aug 2026", title: "Claim rejected", message: "Your Form 19 claim was rejected. Review the reason and resubmit.", read: false, link: "/dashboard/claims" }
+    ],
+    documents: [
+      { id: "doc-1", name: "Aadhaar Card", source: "digilocker", status: "available", dateAdded: "2026-08-10" },
+    ],
+    claims: [
+      {
+        id: "CLM-8821",
+        type: "Form 19 (Final PF Settlement)",
+        dateSubmitted: "2026-07-20",
+        status: "rejected",
+        amount: 340000,
+        note: "Bank account name did not match Aadhaar records at the time of processing. Update your bank KYC and resubmit.",
+      },
+    ],
+  },
+  "claim-clarification": {
+    id: "claim-clarification",
+    email: "arjun.demo@example.test",
+    phone: "+91 9876543216",
+    passwordHash: "demo1234",
+    fixedOtp: "123456",
+    uan: "100944445555",
+    aadhaarName: "ARJUN NAIR",
+    uanName: "ARJUN NAIR",
+    bankName: "ARJUN NAIR",
+    dobAadhaar: "1989-12-05",
+    dobUan: "1989-12-05",
+    bankAccountStatus: "active",
+    employer: "Harbor Freight Solutions",
+    dateOfExit: "2026-08-05",
+    exitDeclaredBy: "employer",
+    daysSinceLastContribution: 21,
+    balance: {
+      employee: 225000,
+      employer: 230000,
+      pension: 50000,
+    },
+    previousUans: [],
+    kycStatus: {
+      aadhaar: "verified",
+      pan: "verified",
+      bank: "verified",
+    },
+    digiLockerConnected: true,
+    digiLockerSyncDate: "2026-08-18",
+    scenarioLabel: "Claim needs clarification from you",
+    recentActivities: [
+      { id: "act-1", date: "18 Aug 2026", title: "EPFO requested clarification", type: "claim" },
+      { id: "act-2", date: "15 Aug 2026", title: "Claim submitted", type: "claim" },
+    ],
+    employmentHistory: [
+      {
+        id: "100944445555",
+        employer: "Harbor Freight Solutions",
+        startDate: "2021-06-01",
+        endDate: "2026-08-05",
+        status: "previous",
+        pfBalance: 505000,
+        isConsolidated: true,
+      },
+    ],
+    notifications: [
+      { id: "notif-1", date: "18 Aug 2026", title: "Action needed on your claim", message: "EPFO has requested an additional declaration form.", read: false, link: "/dashboard/claims" }
+    ],
+    documents: [],
+    claims: [
+      {
+        id: "CLM-7743",
+        type: "Form 31 (Advance)",
+        dateSubmitted: "2026-08-15",
+        status: "pending_clarification",
+        amount: 75000,
+        note: "EPFO has requested a self-declaration form for the reason of withdrawal. Upload within 15 days to avoid rejection.",
+      },
+    ],
+  },
 };

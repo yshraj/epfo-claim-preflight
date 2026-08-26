@@ -167,8 +167,14 @@ export default function LoginPage() {
                   <ul className="list-disc pl-4 space-y-1">
                     <li>priya.demo@example.test (Clean)</li>
                     <li>rajesh.demo@example.test (Mismatch)</li>
+                    <li>meera.demo@example.test (Claim rejected)</li>
+                    <li>arjun.demo@example.test (Needs clarification)</li>
                     <li>Password: <code>demo1234</code></li>
                   </ul>
+                  <p className="mt-2 text-slate-400">
+                    More scenarios (unmerged UAN, delayed claim, multiple issues) are one click away from the profile
+                    menu &rarr; &ldquo;Demo scenarios&rdquo; once you&apos;re logged in.
+                  </p>
                 </div>
               </motion.form>
             )}

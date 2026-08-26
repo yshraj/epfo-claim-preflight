@@ -3,14 +3,15 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, LogOut, User, Settings, Shield, FileText, Bell } from "lucide-react";
+import { ChevronDown, LogOut, User, Settings, Shield, FileText, ClipboardList, Bell } from "lucide-react";
 import { useSession } from "@/context/SessionContext";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/Dialog";
 import Button from "@/components/ui/Button";
+import { MOCK_ACCOUNTS } from "@/data/mockAccounts";
 
 export default function UserMenu() {
-  const { user, logout } = useSession();
+  const { user, logout, switchAccount } = useSession();
   const router = useRouter();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
@@ -97,6 +98,16 @@ export default function UserMenu() {
 
               <DropdownMenu.Item asChild>
                 <Link
+                  href="/dashboard/claims"
+                  className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
+                >
+                  <ClipboardList className="h-4 w-4 text-slate-400" />
+                  My Claims
+                </Link>
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item asChild>
+                <Link
                   href="/dashboard/security"
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
@@ -104,9 +115,31 @@ export default function UserMenu() {
                   Security
                 </Link>
               </DropdownMenu.Item>
-              
+
               <div className="h-px bg-slate-100 my-1 mx-2" />
-              
+
+              <div className="px-3 pt-1.5 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                Demo scenarios
+              </div>
+              {Object.values(MOCK_ACCOUNTS).map((account) => (
+                <DropdownMenu.Item asChild key={account.id}>
+                  <button
+                    type="button"
+                    onClick={() => switchAccount(account.id)}
+                    className={`w-full flex items-start gap-2 px-3 py-2 text-left text-xs rounded-lg outline-none cursor-pointer transition-colors ${
+                      account.id === user.id
+                        ? "bg-brand-50 text-brand-900"
+                        : "hover:bg-slate-50 text-slate-600"
+                    }`}
+                  >
+                    {account.id === user.id && <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand-500 shrink-0" />}
+                    <span className={account.id === user.id ? "font-medium" : ""}>{account.scenarioLabel}</span>
+                  </button>
+                </DropdownMenu.Item>
+              ))}
+
+              <div className="h-px bg-slate-100 my-1 mx-2" />
+
               <DropdownMenu.Item asChild>
                 <button
                   onClick={() => setShowLogoutConfirm(true)}

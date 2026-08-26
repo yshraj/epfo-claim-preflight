@@ -139,6 +139,9 @@ export default function DocumentCenterPage() {
                       {doc.status === "needs_attention" && (
                         <Badge tone="error">Needs Attention</Badge>
                       )}
+                      {doc.status === "processing" && (
+                        <Badge tone="warning">Processing</Badge>
+                      )}
                     </li>
                   )) : (
                     <li className="px-5 py-6 text-center text-sm text-slate-500">No documents found in DigiLocker.</li>
@@ -189,6 +192,9 @@ export default function DocumentCenterPage() {
                       <p className="text-xs text-slate-500 mt-0.5">{doc.dateAdded}</p>
                     </div>
                   </div>
+                  {doc.status === "processing" && (
+                    <Badge tone="warning">Processing</Badge>
+                  )}
                 </li>
               )) : (
                 <li className="px-5 py-8 text-center text-sm text-slate-500 bg-slate-50">

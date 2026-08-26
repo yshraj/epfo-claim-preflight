@@ -48,6 +48,9 @@ export interface ClaimRecord {
   dateSubmitted: string;
   status: "processing" | "approved" | "rejected" | "pending_clarification";
   amount?: number;
+  // Shown on the status timeline for "rejected" / "pending_clarification" —
+  // explains what happened / what EPFO is waiting on, instead of a generic message.
+  note?: string;
 }
 
 export interface MockAccount {

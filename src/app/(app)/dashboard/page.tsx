@@ -6,7 +6,7 @@ import { overallReadiness, runPreflightChecks } from "@/lib/matchEngine";
 import Container from "@/components/ui/Container";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { LayoutGrid, ArrowRight, CheckCircle2, AlertTriangle, XCircle, Briefcase, FileText, Activity } from "lucide-react";
+import { LayoutGrid, ArrowRight, CheckCircle2, AlertTriangle, XCircle, Briefcase, FileText, ClipboardList, Activity } from "lucide-react";
 import { MemberProfile } from "@/types/member";
 import { motion, Variants } from "framer-motion";
 
@@ -171,6 +171,14 @@ export default function DashboardPage() {
                   <Briefcase className="h-5 w-5" />
                 </div>
                 <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">Employment</span>
+              </Link>
+              <Link href="/dashboard/claims" className="col-span-2 bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-brand-500 hover:bg-brand-50 transition-colors flex items-center justify-center text-center gap-2 group">
+                <div className="h-10 w-10 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                  <ClipboardList className="h-5 w-5" />
+                </div>
+                <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">
+                  My Claims{user.claims.length > 0 ? ` (${user.claims.length})` : ""}
+                </span>
               </Link>
             </motion.div>
 
