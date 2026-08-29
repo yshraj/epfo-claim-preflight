@@ -4,9 +4,11 @@ import { useSession } from "@/context/SessionContext";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { useState } from "react";
+import { useT } from "@/i18n/client";
 
 export default function SubmitClaimButton({ href, reason }: { href: string; reason: string }) {
   const { dispatch } = useSession();
+  const t = useT();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -21,7 +23,7 @@ export default function SubmitClaimButton({ href, reason }: { href: string; reas
 
   return (
     <Button size="lg" className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
-      {isSubmitting ? "Submitting..." : "Submit claim"}
+      {isSubmitting ? t("claim.submitting") : t("claim.submit")}
     </Button>
   );
 }

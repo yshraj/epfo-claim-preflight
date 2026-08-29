@@ -7,6 +7,7 @@ import { EmploymentDetail } from "@/types/member";
 import { cn } from "@/lib/cn";
 import { buttonVariants } from "@/components/ui/Button";
 
+import { useT } from "@/i18n/client";
 function formatMonthYear(dateString: string) {
   if (dateString === "Present") return "Present";
   const date = new Date(dateString);
@@ -14,6 +15,7 @@ function formatMonthYear(dateString: string) {
 }
 
 export default function EmploymentTimeline({ employments }: { employments?: EmploymentDetail[] }) {
+  const t = useT();
   const [selectedEmployment, setSelectedEmployment] = useState<EmploymentDetail | null>(null);
 
   if (!employments || employments.length === 0) return null;
@@ -50,7 +52,7 @@ export default function EmploymentTimeline({ employments }: { employments?: Empl
                     </span>
                   )}
                   {emp.status === "active" && (
-                    <span className="text-xs font-medium text-slate-500">PF account active</span>
+                    <span className="text-xs font-medium text-slate-500">{t("employment.active")}</span>
                   )}
                 </div>
               </div>
@@ -78,31 +80,31 @@ export default function EmploymentTimeline({ employments }: { employments?: Empl
                 
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-lg border border-slate-100">
-                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Employment</span>
+                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">{t("dash.employment")}</span>
                     <span className="text-sm font-medium text-slate-900">
                       {formatMonthYear(selectedEmployment.startDate)} — {formatMonthYear(selectedEmployment.endDate)}
                     </span>
                   </div>
                   
                   <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-lg border border-slate-100">
-                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Status</span>
+                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">{t("employment.status")}</span>
                     <span className="text-sm font-medium text-slate-900">
-                      {selectedEmployment.status === "active" ? "Current employment" : "Previous employment"}
+                      {selectedEmployment.status === "active" ? t("employment.current") : t("employment.previous")}
                     </span>
                   </div>
                   
                   <div className="col-span-2 flex flex-col gap-1 p-4 bg-slate-50 rounded-lg border border-slate-100">
-                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">PF Balance</span>
+                    <span className="text-xs text-slate-500 uppercase font-semibold tracking-wider">{t("employment.pfBalance")}</span>
                     <span className="text-2xl font-display font-bold text-slate-900">
                       ₹{selectedEmployment.pfBalance.toLocaleString("en-IN")}
                     </span>
                     <div className="flex items-center gap-1 mt-1">
                       {selectedEmployment.status === "active" ? (
-                        <span className="text-xs text-brand-600 font-medium">Account is active and receiving contributions</span>
+                        <span className="text-xs text-brand-600 font-medium">{t("employment.activeDetail")}</span>
                       ) : selectedEmployment.isConsolidated ? (
-                        <span className="text-xs text-slate-600 font-medium">Funds have been consolidated</span>
+                        <span className="text-xs text-slate-600 font-medium">{t("employment.consolidated")}</span>
                       ) : (
-                        <span className="text-xs text-amber-600 font-medium">Consolidation recommended</span>
+                        <span className="text-xs text-amber-600 font-medium">{t("employment.recommended")}</span>
                       )}
                     </div>
                   </div>
@@ -121,7 +123,7 @@ export default function EmploymentTimeline({ employments }: { employments?: Empl
                 
                 <Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500">
                   <X className="h-4 w-4" />
-                  <span className="sr-only">Close</span>
+                  <span className="sr-only">{t("common.close")}</span>
                 </Dialog.Close>
               </>
             )}

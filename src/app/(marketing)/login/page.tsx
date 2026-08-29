@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useT } from "@/i18n/client";
 import { useSession } from "@/context/SessionContext";
 import Container from "@/components/ui/Container";
 import Button, { buttonVariants } from "@/components/ui/Button";
@@ -12,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import UanActivation from "./UanActivation";
 
 export default function LoginPage() {
+  const t = useT();
   const router = useRouter();
   const { login } = useSession();
 
@@ -38,7 +40,7 @@ export default function LoginPage() {
         // Proceed to OTP step
         setStep("otp");
       } else {
-        setError("Invalid email/phone or password.");
+        setError(t("login.error.credentials"));
       }
     }, 800);
   };
@@ -54,7 +56,7 @@ export default function LoginPage() {
       if (isValid) {
         router.push("/dashboard");
       } else {
-        setError("Invalid OTP. Please try again.");
+        setError(t("login.otp.error"));
       }
     }, 800);
   };
@@ -67,7 +69,7 @@ export default function LoginPage() {
     setTimeout(() => {
       setLoading(false);
       setStep("credentials");
-      setError("Password reset instructions sent. (Mocked)");
+      setError(t("login.forgot.sent"));
     }, 800);
   };
 
@@ -88,10 +90,10 @@ export default function LoginPage() {
     <Container size="narrow" className="py-16">
       <div className="max-w-md mx-auto">
         <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
-          Member Login
+          {t("login.title")}
         </h1>
         <p className="text-sm text-slate-500 mb-8">
-          Sign in to access your EPF account, claim status, and documents.
+          {t("login.subtitle")}
         </p>
 
         <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 mb-8 overflow-hidden relative">
@@ -108,13 +110,13 @@ export default function LoginPage() {
               >
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Email or Mobile Number
+                    {t("login.identifier")}
                   </label>
                   <Input
                     type="text"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
-                    placeholder="e.g. priya.demo@example.test"
+                    placeholder={t("login.identifier.placeholder")}
                     required
                     className="w-full"
                   />
@@ -123,14 +125,14 @@ export default function LoginPage() {
                 <div>
                   <div className="flex justify-between items-center mb-1">
                     <label className="block text-sm font-medium text-slate-700">
-                      Password
+                      {t("login.password")}
                     </label>
                     <button
                       type="button"
                       onClick={() => setStep("forgot")}
                       className="text-xs text-brand-600 hover:text-brand-700 font-medium"
                     >
-                      Forgot password?
+                      {t("login.forgot")}
                     </button>
                   </div>
                   <div className="relative">
@@ -159,21 +161,20 @@ export default function LoginPage() {
                 )}
 
                 <Button type="submit" disabled={loading} className="w-full justify-center">
-                  {loading ? "Authenticating..." : "Continue"}
+                  {loading ? t("login.authenticating") : t("login.continue")}
                 </Button>
                 
                 <div className="mt-4 p-4 bg-slate-50 border border-slate-100 rounded-lg text-xs text-slate-500">
-                  <p className="font-medium text-slate-700 mb-1">Prototype Credentials:</p>
+                  <p className="font-medium text-slate-700 mb-1">{t("login.credentials.title")}</p>
                   <ul className="list-disc pl-4 space-y-1">
-                    <li>priya.demo@example.test (Clean)</li>
-                    <li>rajesh.demo@example.test (Mismatch)</li>
-                    <li>meera.demo@example.test (Claim rejected)</li>
-                    <li>arjun.demo@example.test (Needs clarification)</li>
-                    <li>Password: <code>demo1234</code></li>
+                    <li>priya.demo@example.test ({t("login.credentials.clean")})</li>
+                    <li>rajesh.demo@example.test ({t("login.credentials.mismatch")})</li>
+                    <li>meera.demo@example.test ({t("login.credentials.rejected")})</li>
+                    <li>arjun.demo@example.test ({t("login.credentials.clarification")})</li>
+                    <li>{t("login.credentials.password")} <code>demo1234</code></li>
                   </ul>
                   <p className="mt-2 text-slate-400">
-                    More scenarios (unmerged UAN, delayed claim, multiple issues) are one click away from the profile
-                    menu &rarr; &ldquo;Demo scenarios&rdquo; once you&apos;re logged in.
+                    {t("login.credentials.moreScenarios")}
                   </p>
                 </div>
               </motion.form>
@@ -191,16 +192,16 @@ export default function LoginPage() {
               >
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    One-Time Password (OTP)
+                    {t("login.otp.label")}
                   </label>
                   <p className="text-xs text-slate-500 mb-3">
-                    An OTP has been sent to your registered mobile number and email.
+                    {t("login.otp.sent")}
                   </p>
                   <Input
                     type="text"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    placeholder="Enter 6-digit OTP"
+                    placeholder={t("login.otp.placeholder")}
                     maxLength={6}
                     required
                     className="w-full font-mono tracking-widest text-lg"
@@ -215,7 +216,7 @@ export default function LoginPage() {
                 )}
 
                 <Button type="submit" disabled={loading} className="w-full justify-center">
-                  {loading ? "Verifying..." : "Verify & Login"}
+                  {loading ? t("login.otp.verifying") : t("login.otp.verify")}
                 </Button>
 
                 <div className="flex justify-between items-center mt-4">
@@ -228,7 +229,7 @@ export default function LoginPage() {
                     }}
                     className="text-sm text-slate-500 hover:text-slate-700 font-medium"
                   >
-                    Back
+                    {t("login.back")}
                   </button>
                   <button
                     type="button"
@@ -239,12 +240,12 @@ export default function LoginPage() {
                     }}
                     className="text-sm text-brand-600 hover:text-brand-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend OTP"}
+                    {resendTimer > 0 ? t("login.otp.resendIn", { seconds: resendTimer }) : t("login.otp.resend")}
                   </button>
                 </div>
                 
                 <div className="mt-4 p-4 bg-slate-50 border border-slate-100 rounded-lg text-xs text-slate-500 text-center">
-                  <p>Mock OTP is <strong>123456</strong></p>
+                  <p>{t("login.otp.mockNotice")} <strong>123456</strong></p>
                 </div>
               </motion.form>
             )}
@@ -261,10 +262,10 @@ export default function LoginPage() {
               >
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Email or Mobile Number
+                    {t("login.identifier")}
                   </label>
                   <p className="text-xs text-slate-500 mb-3">
-                    Enter your details to receive a password reset link.
+                    {t("login.forgot.prompt")}
                   </p>
                   <Input
                     type="text"
@@ -274,7 +275,7 @@ export default function LoginPage() {
                 </div>
 
                 <Button type="submit" disabled={loading} className="w-full justify-center">
-                  {loading ? "Sending..." : "Send Reset Link"}
+                  {loading ? t("login.forgot.sending") : t("login.forgot.send")}
                 </Button>
                 
                 <div className="mt-4 text-center">
@@ -283,7 +284,7 @@ export default function LoginPage() {
                     onClick={() => setStep("credentials")}
                     className="text-sm text-slate-500 hover:text-slate-700 font-medium"
                   >
-                    Back to login
+                    {t("login.backToLogin")}
                   </button>
                 </div>
               </motion.form>

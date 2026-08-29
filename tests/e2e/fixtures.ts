@@ -22,6 +22,12 @@ export const NAME_MISMATCH_UAN = "100912345678";
 export const CLEAN_UAN = "100911112222";
 export const NAME_MISMATCH_ID = "name-mismatch";
 export const CLEAN_ID = "clean";
+export const DOB_MISMATCH_UAN = "100922223333";
+export const DOB_MISMATCH_ID = "dob-mismatch";
+// "fully-broken" in mockMembers.json / "multiple-issues" in mockAccounts.ts —
+// the only profile carrying a DOB gap inside the 3-year tolerance.
+export const MULTI_ISSUE_UAN = "100999990000";
+export const MULTI_ISSUE_ID = "multiple-issues";
 
 import { Page } from "@playwright/test";
 

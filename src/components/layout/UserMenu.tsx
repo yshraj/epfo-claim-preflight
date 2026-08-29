@@ -9,9 +9,11 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/Dialog";
 import Button from "@/components/ui/Button";
 import { MOCK_ACCOUNTS } from "@/data/mockAccounts";
+import { useT } from "@/i18n/client";
 
 export default function UserMenu() {
   const { user, logout, switchAccount } = useSession();
+  const t = useT();
   const router = useRouter();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
@@ -21,7 +23,7 @@ export default function UserMenu() {
         href="/login"
         className="text-sm font-medium text-slate-700 hover:text-brand-700 transition-colors"
       >
-        Log in
+        {t("nav.login")}
       </Link>
     );
   }
@@ -63,7 +65,7 @@ export default function UserMenu() {
             >
               <div className="px-3 py-3 border-b border-slate-100 mb-1">
                 <div className="font-semibold text-slate-900 truncate">{user.aadhaarName}</div>
-                <div className="text-xs text-slate-500 font-mono mt-0.5">UAN: {formattedUan}</div>
+                <div className="text-xs text-slate-500 font-mono mt-0.5">{t("common.uan")}: {formattedUan}</div>
               </div>
               
               <DropdownMenu.Item asChild>
@@ -72,7 +74,7 @@ export default function UserMenu() {
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
                   <User className="h-4 w-4 text-slate-400" />
-                  Dashboard
+                  {t("nav.dashboard")}
                 </Link>
               </DropdownMenu.Item>
               
@@ -82,7 +84,7 @@ export default function UserMenu() {
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
                   <Settings className="h-4 w-4 text-slate-400" />
-                  Profile Settings
+                  {t("user.profileSettings")}
                 </Link>
               </DropdownMenu.Item>
 
@@ -92,7 +94,7 @@ export default function UserMenu() {
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
                   <FileText className="h-4 w-4 text-slate-400" />
-                  Document Center
+                  {t("user.documentCenter")}
                 </Link>
               </DropdownMenu.Item>
 
@@ -102,7 +104,7 @@ export default function UserMenu() {
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
                   <ClipboardList className="h-4 w-4 text-slate-400" />
-                  My Claims
+                  {t("user.myClaims")}
                 </Link>
               </DropdownMenu.Item>
 
@@ -112,14 +114,14 @@ export default function UserMenu() {
                   className="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-slate-50 outline-none cursor-pointer text-slate-700"
                 >
                   <Shield className="h-4 w-4 text-slate-400" />
-                  Security
+                  {t("user.security")}
                 </Link>
               </DropdownMenu.Item>
 
               <div className="h-px bg-slate-100 my-1 mx-2" />
 
               <div className="px-3 pt-1.5 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                Demo scenarios
+                {t("user.demoScenarios")}
               </div>
               {Object.values(MOCK_ACCOUNTS).map((account) => (
                 <DropdownMenu.Item asChild key={account.id}>
@@ -146,7 +148,7 @@ export default function UserMenu() {
                   className="w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg hover:bg-red-50 outline-none cursor-pointer text-red-600 font-medium"
                 >
                   <LogOut className="h-4 w-4" />
-                  Log out
+                  {t("user.logout")}
                 </button>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
@@ -157,17 +159,17 @@ export default function UserMenu() {
       <Dialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Log out of EPF Account?</DialogTitle>
+            <DialogTitle>{t("user.logout.title")}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to log out? You will need to authenticate again to access your claims and documents.
+              {t("user.logout.body")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-6 flex-row gap-2 justify-end">
             <Button variant="secondary" onClick={() => setShowLogoutConfirm(false)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button variant="primary" className="bg-red-600 hover:bg-red-700 text-white" onClick={handleLogout}>
-              Log out
+              {t("user.logout")}
             </Button>
           </DialogFooter>
         </DialogContent>

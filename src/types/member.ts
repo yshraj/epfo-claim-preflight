@@ -54,8 +54,48 @@ export type ClaimReason =
   | "leaving_job"
   | "retirement";
 
+// ─── Eligibility (src/lib/eligibilityEngine.ts) ───────────────────────────
+// Categories follow the EPF Scheme, 2026 consolidation of the older
+// 13-reason list. "final_settlement" is not one of the three partial
+// categories — it's the separate full-withdrawal route (Form 19).
+export type WithdrawalCategory =
+  | "essential_needs"
+  | "housing_needs"
+  | "special_circumstances"
+  | "final_settlement";
+
+export interface EligibilityLine {
+  label: string;
+  /** Negative for amounts withheld, so the column sums to the payable total. */
+  amount: number;
+  note?: string;
+}
+
+export interface EligibilityResult {
+  reason: ClaimReason;
+  category: WithdrawalCategory;
+  categoryLabel: string;
+  /** Form numbers are resolved here so the member never has to pick one. */
+  forms: string[];
+  status: "eligible" | "partially_eligible" | "not_yet_eligible";
+  withdrawableAmount: number;
+  totalCorpus: number;
+  /** The 25% held back; 0 at final settlement, when it is released. */
+  minimumBalance: number;
+  serviceMonths: number;
+  serviceLabel: string;
+  breakdown: EligibilityLine[];
+  pension: {
+    amount: number;
+    withdrawable: boolean;
+    note: string;
+  };
+  notes: string[];
+  blockedReason?: string;
+}
+
 export interface CheckResult {
-  key: "name_match" | "date_of_exit" | "bank_account";
+  key: "name_match" | "date_of_birth" | "date_of_exit" | "bank_account";
   status: "pass" | "warn" | "fail";
   title: string;
   detail: string;

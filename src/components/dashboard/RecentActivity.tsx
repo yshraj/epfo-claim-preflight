@@ -1,14 +1,16 @@
 import { Activity } from "@/types/member";
+import { useT } from "@/i18n/client";
 import { Clock } from "lucide-react";
 
 export default function RecentActivity({ activities }: { activities?: Activity[] }) {
+  const t = useT();
   if (!activities || activities.length === 0) {
     return (
       <div className="border border-slate-200 rounded-lg bg-white p-6 h-full">
-        <h3 className="font-semibold text-slate-900 mb-4">Recent activity</h3>
+        <h3 className="font-semibold text-slate-900 mb-4">{t("activity.recent")}</h3>
         <div className="flex flex-col items-center justify-center text-center py-8 text-slate-500">
           <Clock className="h-8 w-8 mb-3 text-slate-300" />
-          <p className="text-sm">No recent activity</p>
+          <p className="text-sm">{t("activity.none")}</p>
         </div>
       </div>
     );
@@ -16,7 +18,7 @@ export default function RecentActivity({ activities }: { activities?: Activity[]
 
   return (
     <div className="border border-slate-200 rounded-lg bg-white p-6 h-full flex flex-col">
-      <h3 className="font-semibold text-slate-900 mb-6">Recent activity</h3>
+      <h3 className="font-semibold text-slate-900 mb-6">{t("activity.recent")}</h3>
       <div className="relative border-l border-slate-200 ml-3 space-y-6 flex-1">
         {activities.map((activity, index) => (
           <div key={activity.id} className="relative pl-6">

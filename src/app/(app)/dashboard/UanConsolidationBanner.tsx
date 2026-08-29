@@ -5,7 +5,9 @@ import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { CopyPlus, CheckCircle2, ChevronRight, RefreshCcw } from "lucide-react";
 
+import { useT } from "@/i18n/client";
 export default function UanConsolidationBanner({ previousUans }: { previousUans: string[] }) {
+  const t = useT();
   const [step, setStep] = useState<"idle" | "review" | "loading" | "success">("idle");
 
   if (!previousUans || previousUans.length === 0) return null;
@@ -16,7 +18,7 @@ export default function UanConsolidationBanner({ previousUans }: { previousUans:
         <div className="flex items-start gap-3">
           <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
           <div>
-            <div className="font-medium text-slate-900">Transfer Initiated Successfully</div>
+            <div className="font-medium text-slate-900">{t("consolidation.success")}</div>
             <div className="text-sm text-slate-600 mt-1">
               Your previous PF accounts will be merged into your current UAN. You will receive an SMS confirmation within 24 hours. This usually takes 3-5 working days to reflect.
             </div>
@@ -29,7 +31,7 @@ export default function UanConsolidationBanner({ previousUans }: { previousUans:
   if (step === "review" || step === "loading") {
     return (
       <div className="mb-6 p-5 rounded-lg border border-brand-200 bg-white shadow-sm">
-        <div className="font-medium text-slate-900 mb-4">Review Accounts to Consolidate</div>
+        <div className="font-medium text-slate-900 mb-4">{t("consolidation.review")}</div>
         
         <div className="border border-slate-200 rounded-md p-4 bg-slate-50 mb-4">
           <div className="flex justify-between items-start">
@@ -39,7 +41,7 @@ export default function UanConsolidationBanner({ previousUans }: { previousUans:
             </div>
             <div className="text-right">
               <div className="text-sm font-medium text-slate-900">₹72,450</div>
-              <div className="text-xs text-brand-600 mt-0.5">Verified match</div>
+              <div className="text-xs text-brand-600 mt-0.5">{t("consolidation.verifiedMatch")}</div>
             </div>
           </div>
         </div>
@@ -63,7 +65,7 @@ export default function UanConsolidationBanner({ previousUans }: { previousUans:
             {step === "loading" ? (
               <><RefreshCcw className="h-4 w-4 animate-spin" /> Processing Transfer...</>
             ) : (
-              "Confirm Transfer"
+              t("consolidation.confirm")
             )}
           </button>
         </div>

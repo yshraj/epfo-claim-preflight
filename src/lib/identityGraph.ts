@@ -18,6 +18,7 @@ export interface GraphData {
 
 const LABELS: Record<CheckResult["key"], string> = {
   name_match: "Identity",
+  date_of_birth: "Birth Date",
   date_of_exit: "Exit Date",
   bank_account: "Bank",
 };
@@ -33,12 +34,13 @@ export function resultsToGraphData(results: CheckResult[]): GraphData {
 }
 
 // Placeholder shape for the idle/ambient hero display, where there's no
-// real member yet — same 3 labels as a real check, so the diagram reads
+// real member yet — same labels as a real check, so the diagram reads
 // as "this is what it looks like," not an empty/broken component.
 // IdentityGraph ignores `status` entirely when rendered with idle=true.
 export const IDLE_GRAPH_DATA: GraphData = {
   edges: [
     { id: "name_match", label: "Identity", status: "pass" },
+    { id: "date_of_birth", label: "Birth Date", status: "pass" },
     { id: "date_of_exit", label: "Exit Date", status: "pass" },
     { id: "bank_account", label: "Bank", status: "pass" },
   ],

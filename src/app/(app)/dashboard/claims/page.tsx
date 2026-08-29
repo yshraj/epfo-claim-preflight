@@ -7,6 +7,8 @@ import StatusTimeline from "@/app/(app)/claim/status/StatusTimeline";
 import { FileText } from "lucide-react";
 import type { ClaimRecord } from "@/types/account";
 
+import { useT } from "@/i18n/client";
+import type { Translator } from "@/i18n";
 const STATUS_TONE: Record<ClaimRecord["status"], "success" | "warning" | "error" | "info"> = {
   approved: "success",
   processing: "info",
@@ -14,14 +16,18 @@ const STATUS_TONE: Record<ClaimRecord["status"], "success" | "warning" | "error"
   rejected: "error",
 };
 
-const STATUS_LABEL: Record<ClaimRecord["status"], string> = {
-  approved: "Approved",
-  processing: "Processing",
-  pending_clarification: "Needs your response",
-  rejected: "Rejected",
-};
+// Built inside the component rather than at module scope: the labels depend
+// on the active language, which isn't known until render.
+const statusLabels = (t: Translator): Record<ClaimRecord["status"], string> => ({
+  approved: t("claims.status.approved"),
+  processing: t("claims.status.processing"),
+  pending_clarification: t("claims.status.clarification"),
+  rejected: t("claims.status.rejected"),
+});
 
 export default function MyClaimsPage() {
+  const t = useT();
+  const STATUS_LABEL = statusLabels(t);
   const { user } = useSession();
 
   if (!user) return null;
@@ -29,8 +35,8 @@ export default function MyClaimsPage() {
   return (
     <Container className="py-12 max-w-3xl">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">My Claims</h1>
-        <p className="text-slate-500">Track every claim you&apos;ve submitted, including ones that need action from you.</p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">{t("claims.title")}</h1>
+        <p className="text-slate-500">{t("claims.subtitle")}</p>
       </div>
 
       {user.claims.length === 0 ? (

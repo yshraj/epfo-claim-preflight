@@ -2,33 +2,35 @@
 
 import Link from "next/link";
 import { useSession } from "@/context/SessionContext";
+import { useT } from "@/i18n/client";
 import Container from "@/components/ui/Container";
 import { Wallet, ArrowRightLeft, ActivitySquare, ChevronRight } from "lucide-react";
 
 export default function ClaimTypePage() {
   const { user } = useSession();
+  const t = useT();
 
   if (!user) return null;
   const uan = user.uan;
 
   const options = [
     {
-      title: "Withdraw PF",
-      description: "Apply for full or partial withdrawal (Forms 19, 31, 10C)",
+      title: t("claim.type.withdraw.title"),
+      description: t("claim.type.withdraw.desc"),
       icon: Wallet,
       href: `/claim/reason?uan=${uan}`,
       isDemo: false
     },
     {
-      title: "Transfer PF",
-      description: "Move your PF balance from a previous employer to your current one",
+      title: t("claim.type.transfer.title"),
+      description: t("claim.type.transfer.desc"),
       icon: ArrowRightLeft,
       href: "#",
       isDemo: true
     },
     {
-      title: "Check claim status",
-      description: "Track an existing application",
+      title: t("claim.type.status.title"),
+      description: t("claim.type.status.desc"),
       icon: ActivitySquare,
       href: `/claim/status?uan=${uan}`,
       isDemo: false
@@ -38,10 +40,10 @@ export default function ClaimTypePage() {
   return (
     <Container size="narrow" className="py-16">
       <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
-        What would you like to do?
+        {t("claim.type.title")}
       </h1>
       <p className="text-sm text-slate-500 mb-8">
-        Select a service to continue.
+        {t("claim.type.subtitle")}
       </p>
 
       <div className="flex flex-col gap-4">
@@ -63,7 +65,7 @@ export default function ClaimTypePage() {
                 <span className="font-medium text-slate-900">{opt.title}</span>
                 {opt.isDemo && (
                   <span className="text-[10px] uppercase tracking-wider font-semibold bg-slate-200 text-slate-500 px-2 py-0.5 rounded">
-                    Not in prototype
+                    {t("claim.type.notInPrototype")}
                   </span>
                 )}
               </div>

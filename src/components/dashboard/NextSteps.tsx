@@ -1,14 +1,16 @@
 import { MemberProfile } from "@/types/member";
+import { useT } from "@/i18n/client";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function NextSteps({ member }: { member: MemberProfile }) {
+  const t = useT();
   const steps = [];
 
   // Check name match basic assumption (if uanName !== aadhaarName we flag it)
   if (member.uanName !== member.aadhaarName) {
     steps.push({
-      title: "Review name difference",
+      title: t("nextSteps.reviewName"),
       time: "1 min",
       href: `/claim/preflight?uan=${member.uan}`,
     });
@@ -17,7 +19,7 @@ export default function NextSteps({ member }: { member: MemberProfile }) {
   // Check previous UANs
   if (member.previousUans.length > 0) {
     steps.push({
-      title: "Review previous PF account",
+      title: t("nextSteps.reviewPrevious"),
       time: "2 mins",
       href: "#",
     });
@@ -26,7 +28,7 @@ export default function NextSteps({ member }: { member: MemberProfile }) {
   // Check missing KYC
   if (member.kycStatus.bank !== "verified") {
     steps.push({
-      title: "Verify bank account",
+      title: t("nextSteps.verifyBank"),
       time: "5 mins",
       href: "#",
     });
@@ -35,8 +37,8 @@ export default function NextSteps({ member }: { member: MemberProfile }) {
   if (steps.length === 0) {
     return (
       <div className="bg-brand-50 border border-brand-200 rounded-lg p-6">
-        <h3 className="font-medium text-slate-900 mb-1">You&apos;re all set!</h3>
-        <p className="text-sm text-brand-700">No action required. Your account is ready for claims.</p>
+        <h3 className="font-medium text-slate-900 mb-1">{t("nextSteps.allSet")}</h3>
+        <p className="text-sm text-brand-700">{t("nextSteps.noAction")}</p>
       </div>
     );
   }
@@ -44,8 +46,8 @@ export default function NextSteps({ member }: { member: MemberProfile }) {
   return (
     <div className="border border-slate-200 rounded-lg bg-white overflow-hidden">
       <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-        <h3 className="font-semibold text-slate-900">Your next steps</h3>
-        <p className="text-xs text-slate-500 mt-1">Complete these to prepare your account</p>
+        <h3 className="font-semibold text-slate-900">{t("nextSteps.title")}</h3>
+        <p className="text-xs text-slate-500 mt-1">{t("nextSteps.subtitle")}</p>
       </div>
       <div className="divide-y divide-slate-100">
         {steps.map((step, idx) => (

@@ -4,15 +4,17 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
+import { useT } from "@/i18n/client";
 export default function DocumentsVerifications({ member }: { member: MemberProfile }) {
+  const t = useT();
   const docs = [
     {
-      name: "Aadhaar",
+      name: t("profile.aadhaarCard"),
       status: member.kycStatus.aadhaar,
       lastChecked: "24 Aug 2026", // Mock date for realism
     },
     {
-      name: "Bank account",
+      name: t("profile.bankAccount"),
       status: member.kycStatus.bank,
       lastChecked: "24 Aug 2026",
     },

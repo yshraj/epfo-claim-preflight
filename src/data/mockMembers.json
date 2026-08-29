@@ -137,6 +137,63 @@
     ]
   },
   {
+    "id": "dob-mismatch",
+    "uan": "100922223333",
+    "aadhaarName": "KAVITA IYER",
+    "uanName": "KAVITA IYER",
+    "bankName": "KAVITA IYER",
+    "dobAadhaar": "1987-06-14",
+    "dobUan": "1981-06-14",
+    "bankAccountStatus": "active",
+    "employer": "Sahyadri Logistics Ltd",
+    "dateOfExit": "2026-07-28",
+    "exitDeclaredBy": "employer",
+    "daysSinceLastContribution": 32,
+    "balance": {
+      "employee": 268000,
+      "employer": 274000,
+      "pension": 49000
+    },
+    "previousUans": [],
+    "kycStatus": {
+      "aadhaar": "verified",
+      "pan": "verified",
+      "bank": "verified"
+    },
+    "scenarioLabel": "Date of birth differs by 6 years — beyond the 3-year limit",
+    "recentActivities": [
+      {
+        "id": "act-1",
+        "date": "26 Aug 2026",
+        "title": "Claim pre-check completed",
+        "type": "claim"
+      },
+      {
+        "id": "act-2",
+        "date": "20 Aug 2026",
+        "title": "Exit date recorded by employer",
+        "type": "profile"
+      },
+      {
+        "id": "act-3",
+        "date": "11 Aug 2026",
+        "title": "Bank account verified",
+        "type": "bank"
+      }
+    ],
+    "employmentHistory": [
+      {
+        "id": "100922223333",
+        "employer": "Sahyadri Logistics Ltd",
+        "startDate": "2020-02-17",
+        "endDate": "2026-07-28",
+        "status": "previous",
+        "pfBalance": 542000,
+        "isConsolidated": true
+      }
+    ]
+  },
+  {
     "id": "missing-doe",
     "uan": "100933334444",
     "aadhaarName": "ANITA DESAI",

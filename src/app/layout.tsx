@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, Inter, JetBrains_Mono, Noto_Sans_Devanagari } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import MockBanner from "@/components/MockBanner";
 import DemoSwitcher from "@/components/DemoSwitcher";
 import { SessionProvider } from "@/context/SessionContext";
+import { LocaleProvider } from "@/i18n/client";
+import { getLocale } from "@/i18n/server";
 
 const display = Outfit({
   subsets: ["latin"],
@@ -15,6 +17,15 @@ const body = Inter({
   subsets: ["latin"], 
   variable: "--font-body", 
   weight: ["400", "500", "600"] 
+});
+// Inter and Outfit carry no Devanagari glyphs, so Hindi would otherwise fall
+// back to an arbitrary system font. Loaded for every visitor rather than
+// conditionally, because next/font needs a static call — the cost is one
+// extra woff2 that only renders when Hindi is active.
+const devanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  variable: "--font-devanagari",
+  weight: ["400", "500", "600", "700"],
 });
 const mono = JetBrains_Mono({
   subsets: ["latin"],
@@ -36,9 +47,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Resolved once here and handed to the client provider, so client
+  // components never have to re-read the cookie and there is no flash of
+  // English before Hindi appears.
+  const locale = getLocale();
+
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${display.variable} ${body.variable} ${mono.variable} ${devanagari.variable}`}>
       <body className="font-body">
+        <LocaleProvider locale={locale}>
         <SessionProvider>
           <MockBanner />
           {children}
@@ -46,6 +63,7 @@ export default function RootLayout({
             <DemoSwitcher />
           </Suspense>
         </SessionProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
