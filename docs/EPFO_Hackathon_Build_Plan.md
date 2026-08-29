@@ -41,9 +41,10 @@ Screen 3 — "Why do you need money?"
   the user never sees form numbers.
 
 Screen 4 — Pre-Flight Check  ← THE CORE FEATURE, spend most of your time here
-  Runs 3 checks against the mock member record:
+  Runs 4 checks against the mock member record:
     - Name match: Aadhaar name vs UAN name vs bank account name
         → fuzzy-match score shown, plain-language diff highlighted
+    - DOB match: Aadhaar DOB vs UAN DOB
     - Date of Exit: present / missing / self-declarable after 60 days
     - Bank account status: active / mismatched name (mocked "instant check",
       replaces cheque upload)
@@ -172,8 +173,10 @@ If you want *a* visual flourish, spend it on: the balance number animating up on
 
 | Component | Real | Mocked |
 |---|---|---|
-| Name fuzzy-match logic | ✅ Actual algorithm | |
+| Name and DOB fuzzy-match logic | ✅ Actual algorithm | |
 | DoE / eligibility rules | ✅ Actual logic | |
+| English/Hindi Localization | ✅ Real toggle | |
+| Demo Scenario Switcher | ✅ Real toggle | |
 | Plain-language explanations | ✅ Real LLM call | |
 | Member records (Aadhaar/UAN/bank) | | ✅ Synthetic JSON |
 | Aadhaar OTP login | | ✅ Simulated |
