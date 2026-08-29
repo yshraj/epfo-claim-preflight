@@ -6,24 +6,28 @@ import { ShieldCheck } from "lucide-react";
 import { marketingNav, appNav } from "./NavLinks";
 import MobileNav from "./MobileNav";
 import UserMenu from "./UserMenu";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { useT } from "@/i18n/client";
 
 import { useSearchParams } from "next/navigation";
 
 function UanDisplay() {
+  const t = useT();
   const searchParams = useSearchParams();
   const uan = searchParams.get("uan") || "1009 1111 2222";
   const formattedUan = `${uan.slice(0, 4)} ${uan.slice(4, 8)} ${uan.slice(8, 12)}`;
   
   return (
     <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-brand-100 border border-brand-200 rounded-md font-mono text-xs text-slate-600">
-      UAN: <span className="font-semibold text-slate-900">{formattedUan}</span>
+      {t("common.uan")}: <span className="font-semibold text-slate-900">{formattedUan}</span>
     </div>
   );
 }
 
 export default function Header({ variant }: { variant: "marketing" | "app" }) {
+  const t = useT();
   const links = variant === "marketing" ? marketingNav : appNav;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -75,10 +79,10 @@ export default function Header({ variant }: { variant: "marketing" | "app" }) {
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2 font-display font-bold text-lg">
             <ShieldCheck className="h-5 w-5 text-brand-600" aria-hidden="true" />
-            <span className="text-slate-950 hidden sm:inline-block">Claim Pre-Flight</span>
+            <span className="text-slate-950 hidden sm:inline-block">{t("brand.name")}</span>
           </Link>
           <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded hidden md:inline-block">
-            Prototype &middot; Demo Data
+            {t("brand.badge")}
           </span>
         </div>
 
@@ -89,15 +93,16 @@ export default function Header({ variant }: { variant: "marketing" | "app" }) {
               href={link.href}
               className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
           {variant === "marketing" ? (
             <Link href="/login" className={cn(buttonVariants({ size: "sm" }), "rounded-lg font-medium")}>
-              Check my claim
+              {t("nav.checkMyClaim")}
             </Link>
           ) : (
             <div className="flex items-center gap-4">
@@ -111,7 +116,10 @@ export default function Header({ variant }: { variant: "marketing" | "app" }) {
           )}
         </div>
 
-        <MobileNav links={links} />
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <MobileNav links={links} />
+        </div>
       </div>
     </header>
   );

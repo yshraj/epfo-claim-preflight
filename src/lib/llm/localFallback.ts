@@ -10,6 +10,10 @@ export const localFallback: Record<string, string> = {
     "When the names differ this much, the system can't safely assume it's the same person, so it blocks the claim.",
   "name_match:fail:severe":
     "This isn't a typo-level difference — the records need to be corrected before this claim can go further.",
+  "date_of_birth:warn:dob_minor_drift":
+    "Your birth date is a little different on the two records, and Aadhaar itself is accepted as the proof to settle it.",
+  "date_of_birth:fail:dob_major_drift":
+    "A gap this wide can't be resolved with Aadhaar alone, so EPFO asks for a birth or school certificate before releasing money.",
   "date_of_exit:warn:self_declare_eligible":
     "Your employer usually confirms this, but after 60 days of silence you're allowed to confirm it yourself.",
   "date_of_exit:fail:waiting_period":

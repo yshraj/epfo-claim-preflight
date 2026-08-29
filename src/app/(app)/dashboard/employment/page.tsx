@@ -7,7 +7,9 @@ import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 
+import { useT } from "@/i18n/client";
 export default function EmploymentHistoryPage() {
+  const t = useT();
   const { user } = useSession();
 
   if (!user) return null;
@@ -15,8 +17,8 @@ export default function EmploymentHistoryPage() {
   return (
     <Container className="py-12 max-w-4xl">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">My Employment</h1>
-        <p className="text-slate-500">Your employment history and associated Provident Fund accounts.</p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">{t("employment.title")}</h1>
+        <p className="text-slate-500">{t("employment.subtitle")}</p>
       </div>
 
       <div className="relative border-l-2 border-slate-200 ml-4 pl-8 pb-8 space-y-12">
@@ -45,9 +47,9 @@ export default function EmploymentHistoryPage() {
                   
                   <div className="flex flex-col items-start md:items-end gap-2">
                     {job.status === "active" ? (
-                      <Badge tone="success" className="bg-emerald-50 text-emerald-700 border-emerald-200">Current Employer</Badge>
+                      <Badge tone="success" className="bg-emerald-50 text-emerald-700 border-emerald-200">{t("employment.currentEmployer")}</Badge>
                     ) : (
-                      <Badge tone="neutral" className="bg-slate-100 text-slate-600 border-slate-200">Previous Employer</Badge>
+                      <Badge tone="neutral" className="bg-slate-100 text-slate-600 border-slate-200">{t("employment.previousEmployer")}</Badge>
                     )}
                   </div>
                 </div>
@@ -55,20 +57,20 @@ export default function EmploymentHistoryPage() {
                 <div className="p-6 bg-slate-50/50">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">PF Account No.</p>
+                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">{t("employment.accountNo")}</p>
                       <p className="text-sm font-mono text-slate-900">{job.id}</p>
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Accumulated Balance</p>
+                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">{t("employment.accumulated")}</p>
                       <p className="text-sm font-medium text-slate-900 flex items-center">
                         <IndianRupee className="h-3.5 w-3.5" />
                         {job.pfBalance.toLocaleString("en-IN")}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Consolidation Status</p>
+                      <p className="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">{t("employment.consolidationStatus")}</p>
                       {job.status === "active" ? (
-                        <p className="text-sm text-slate-600">Active account</p>
+                        <p className="text-sm text-slate-600">{t("employment.activeAccount")}</p>
                       ) : job.isConsolidated ? (
                         <div className="flex items-center gap-1.5 text-sm text-emerald-600">
                           <CheckCircle2 className="h-4 w-4" /> Transferred
@@ -85,7 +87,7 @@ export default function EmploymentHistoryPage() {
                     <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                       <div className="flex gap-3 text-amber-800 text-sm">
                         <ShieldAlert className="h-5 w-5 shrink-0" />
-                        <p>This previous account balance has not been merged into your current account. You should transfer it to ensure continuous interest.</p>
+                        <p>{t("employment.notMerged")}</p>
                       </div>
                       <Link href={`/dashboard/pf-accounts/${job.id}`}>
                         <Button variant="secondary" size="sm" className="shrink-0 bg-white hover:bg-amber-100 border-amber-300">

@@ -2,6 +2,8 @@
   "name_match:warn:close": "Even small differences — a missing middle name, an extra initial — are enough for this check to fail automatically.",
   "name_match:fail:moderate": "When the names differ this much, the system can't safely assume it's the same person, so it blocks the claim.",
   "name_match:fail:severe": "This isn't a typo-level difference — the records need to be corrected before this claim can go further.",
+  "date_of_birth:warn:dob_minor_drift": "Your birth date is a little different on the two records, and Aadhaar itself is accepted as the proof to settle it.",
+  "date_of_birth:fail:dob_major_drift": "A gap this wide can't be resolved with Aadhaar alone, so EPFO asks for a birth or school certificate before releasing money.",
   "date_of_exit:warn:self_declare_eligible": "Your employer usually confirms this, but after 60 days of silence you're allowed to confirm it yourself.",
   "date_of_exit:fail:waiting_period": "Without this date, the system can't tell if you've actually left your job yet — that's what blocks a final settlement.",
   "bank_account:fail:name_mismatch": "Banks reject transfers when the account name doesn't match the claimant's name — this catches that before the bank does.",

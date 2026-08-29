@@ -10,6 +10,7 @@ import { LayoutGrid, ArrowRight, CheckCircle2, AlertTriangle, XCircle, Briefcase
 import { MemberProfile } from "@/types/member";
 import { motion, Variants } from "framer-motion";
 
+import { useT } from "@/i18n/client";
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
@@ -24,6 +25,7 @@ const fadeUp: Variants = {
 };
 
 export default function DashboardPage() {
+  const t = useT();
   const { user } = useSession();
 
   if (!user) return null;
@@ -41,7 +43,7 @@ export default function DashboardPage() {
     <Container size="wide" className="py-12 md:py-16">
       <motion.div variants={staggerContainer} initial="hidden" animate="show">
         <motion.div variants={fadeUp} className="mb-10">
-          <div className="text-sm text-slate-500 font-medium">Good evening,</div>
+          <div className="text-sm text-slate-500 font-medium">{t("dash.greeting.evening")}</div>
           <div className="font-display font-bold text-3xl tracking-tight text-slate-950 mt-1">
             {user.aadhaarName.split(" ")[0]}
           </div>
@@ -55,15 +57,15 @@ export default function DashboardPage() {
             
             {/* Action Center / Next Steps */}
             <motion.div variants={fadeUp}>
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500 mb-4">Your Next Steps</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500 mb-4">{t("dash.nextSteps")}</h2>
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-1 overflow-hidden">
                 {user.notifications.length === 0 && readiness === "ready" ? (
                   <div className="p-8 text-center text-slate-500 flex flex-col items-center">
                     <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-3">
                       <CheckCircle2 className="h-6 w-6" />
                     </div>
-                    <p className="font-medium text-slate-900 mb-1">You&apos;re all set.</p>
-                    <p className="text-sm">No pending actions required for your account.</p>
+                    <p className="font-medium text-slate-900 mb-1">{t("dash.allSet")}</p>
+                    <p className="text-sm">{t("dash.noPending")}</p>
                   </div>
                 ) : (
                   <ul className="divide-y divide-slate-100">
@@ -90,8 +92,8 @@ export default function DashboardPage() {
                           1
                         </div>
                         <div className="flex-1">
-                          <p className="font-medium text-slate-900">Review claim readiness</p>
-                          <p className="text-sm text-slate-500 mb-2">Some account details need attention before you can submit a claim.</p>
+                          <p className="font-medium text-slate-900">{t("dash.reviewReadiness")}</p>
+                          <p className="text-sm text-slate-500 mb-2">{t("dash.needsAttention")}</p>
                           <Link href="/claim/preflight?reason=medical" className="text-xs font-medium text-brand-600 hover:text-brand-700">
                             Resolve now &rarr;
                           </Link>
@@ -104,7 +106,7 @@ export default function DashboardPage() {
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500 mb-4">Claim Readiness</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500 mb-4">{t("dash.claimReadiness")}</h2>
               <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <div className="font-medium text-slate-900">{passedChecks} of {totalChecks} checks complete</div>
@@ -164,13 +166,13 @@ export default function DashboardPage() {
                 <div className="h-10 w-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <FileText className="h-5 w-5" />
                 </div>
-                <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">Documents</span>
+                <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">{t("dash.documents")}</span>
               </Link>
               <Link href="/dashboard/employment" className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-brand-500 hover:bg-brand-50 transition-colors flex flex-col items-center justify-center text-center gap-2 group">
                 <div className="h-10 w-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Briefcase className="h-5 w-5" />
                 </div>
-                <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">Employment</span>
+                <span className="text-sm font-medium text-slate-700 group-hover:text-brand-700">{t("dash.employment")}</span>
               </Link>
               <Link href="/dashboard/claims" className="col-span-2 bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-brand-500 hover:bg-brand-50 transition-colors flex items-center justify-center text-center gap-2 group">
                 <div className="h-10 w-10 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
@@ -184,8 +186,8 @@ export default function DashboardPage() {
 
             <motion.div variants={fadeUp} className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden hover:shadow-card transition-shadow">
                <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                 <h3 className="font-semibold text-slate-900">Recent Activity</h3>
-                 <Link href="/dashboard/activity" className="text-xs font-medium text-brand-600 hover:text-brand-700">View all</Link>
+                 <h3 className="font-semibold text-slate-900">{t("dash.recentActivity")}</h3>
+                 <Link href="/dashboard/activity" className="text-xs font-medium text-brand-600 hover:text-brand-700">{t("dash.viewAll")}</Link>
                </div>
                <div className="p-0">
                  <ul className="divide-y divide-slate-100">
@@ -199,7 +201,7 @@ export default function DashboardPage() {
                      </li>
                    ))}
                    {user.recentActivities.length === 0 && (
-                     <li className="p-4 text-center text-sm text-slate-500">No recent activity.</li>
+                     <li className="p-4 text-center text-sm text-slate-500">{t("dash.noRecentActivity")}</li>
                    )}
                  </ul>
                </div>
@@ -212,9 +214,9 @@ export default function DashboardPage() {
               >
                 <div className="flex items-center gap-3 mb-1">
                   <LayoutGrid className="h-5 w-5 text-slate-400" />
-                  <div className="font-medium text-slate-900">Explore other services</div>
+                  <div className="font-medium text-slate-900">{t("dash.exploreServices")}</div>
                 </div>
-                <div className="text-xs text-slate-500 ml-8 mb-2">Passbook, KYC, grievances, pension &amp; more</div>
+                <div className="text-xs text-slate-500 ml-8 mb-2">{t("dash.exploreServices.sub")}</div>
                 <div className="flex items-center text-xs font-medium text-brand-600 ml-8">
                   View directory
                   <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-0.5 transition-transform" />

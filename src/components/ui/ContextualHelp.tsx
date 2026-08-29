@@ -6,6 +6,7 @@ import { HelpCircle, X, ChevronRight, MessageSquare, ExternalLink } from "lucide
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
+import { useT } from "@/i18n/client";
 type HelpItem = {
   q: string;
   a: string | React.ReactNode;
@@ -13,38 +14,34 @@ type HelpItem = {
 
 type HelpContext = Record<string, HelpItem[]>;
 
-const helpKnowledgeBase: HelpContext = {
-  "/claim/status": [
-    { q: "Why is my claim still processing?", a: "Claims typically take up to 20 days. If it exceeds this period, you can request assistance." },
-    { q: "What does regional processing mean?", a: "Your claim has been assigned to a local field office near your employer for final verification." },
-  ],
-  "/claim/preflight": [
-    { q: "What can I do about a name mismatch?", a: "You can apply for a joint declaration correction. This prototype includes a flow to demonstrate that fix." },
-    { q: "Why is my bank account pending?", a: "Bank accounts must be digitally signed by your employer. Contact your HR department." },
-  ],
-  "/dashboard/documents": [
-    { q: "Which documents do I need?", a: "For most withdrawals, a cancelled cheque or passbook copy is required. Name corrections may require Aadhaar or Passport." },
-    { q: "Can I use a DigiLocker document?", a: "Yes, connecting DigiLocker automatically fetches your verified Aadhaar and PAN." },
-  ],
-  "default": [
-    { q: "How do I update my KYC?", a: "Go to your Profile settings to initiate KYC updates." },
-    { q: "Where can I find my UAN?", a: "Your UAN is printed on your salary slip, or you can retrieve it via 'Know Your UAN' on the main portal." }
-  ]
+// Question/answer text is looked up per language at render; only the routing
+// and the key stems live here.
+const helpKnowledgeBase: Record<string, "status" | "preflight" | "documents" | "default"> = {
+  "/claim/status": "status",
+  "/claim/preflight": "preflight",
+  "/dashboard/documents": "documents",
+  default: "default",
 };
 
 export default function ContextualHelp() {
+  const t = useT();
   const [isOpen, setIsOpen] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState<HelpItem | null>(null);
   const pathname = usePathname();
 
-  // Determine context
-  let contextQuestions = helpKnowledgeBase["default"];
+  // Determine context, then resolve the two questions for it in the active
+  // language. Each context has exactly two entries (q1/q2) in the dictionary.
+  let stem = helpKnowledgeBase["default"];
   for (const key of Object.keys(helpKnowledgeBase)) {
-    if (pathname.startsWith(key)) {
-      contextQuestions = helpKnowledgeBase[key];
+    if (key !== "default" && pathname.startsWith(key)) {
+      stem = helpKnowledgeBase[key];
       break;
     }
   }
+  const contextQuestions: HelpItem[] = (["1", "2"] as const).map((n) => ({
+    q: t(`help.${stem}.q${n}`),
+    a: t(`help.${stem}.a${n}`),
+  }));
 
   // Reset view when path changes
   useEffect(() => {
@@ -56,7 +53,7 @@ export default function ContextualHelp() {
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 h-12 w-12 bg-brand-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-brand-700 hover:scale-105 transition-all z-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-        aria-label="Need help?"
+        aria-label={t("help.aria")}
       >
         <HelpCircle className="h-6 w-6" />
       </button>
@@ -74,7 +71,7 @@ export default function ContextualHelp() {
             <div className="bg-brand-600 text-white p-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5" />
-                <h3 className="font-medium">Service Assistant</h3>
+                <h3 className="font-medium">{t("help.title")}</h3>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -90,7 +87,7 @@ export default function ContextualHelp() {
                   &larr; Back to suggestions
                 </button>
               ) : (
-                <p>Hi! I can help you understand the information on this page.</p>
+                <p>{t("help.intro")}</p>
               )}
             </div>
 
@@ -104,16 +101,16 @@ export default function ContextualHelp() {
                     {activeQuestion.a}
                   </div>
                   <div className="mt-8 border-t border-slate-100 pt-4 px-1">
-                    <p className="text-xs text-slate-500 mb-2">Did this help?</p>
+                    <p className="text-xs text-slate-500 mb-2">{t("help.didThisHelp")}</p>
                     <div className="flex gap-2">
-                      <button onClick={() => setActiveQuestion(null)} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-md transition-colors">Yes, thanks</button>
-                      <button onClick={() => setActiveQuestion(null)} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-md transition-colors">I need more help</button>
+                      <button onClick={() => setActiveQuestion(null)} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-md transition-colors">{t("help.yes")}</button>
+                      <button onClick={() => setActiveQuestion(null)} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-md transition-colors">{t("help.needMore")}</button>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col gap-1">
-                  <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Suggested Questions</p>
+                  <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-500">{t("help.suggested")}</p>
                   {contextQuestions.map((item, i) => (
                     <button
                       key={i}

@@ -9,7 +9,9 @@ import Button from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+import { useT } from "@/i18n/client";
 export default function ConnectedServicesPage() {
+  const t = useT();
   const { user, dispatch } = useSession();
   const router = useRouter();
   const [step, setStep] = useState<"intro" | "connecting" | "success">("intro");
@@ -22,10 +24,10 @@ export default function ConnectedServicesPage() {
         <div className="mx-auto w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-6">
           <CheckCircle2 className="h-8 w-8" />
         </div>
-        <h1 className="font-display text-2xl font-bold tracking-tight text-slate-900 mb-2">DigiLocker Connected</h1>
-        <p className="text-slate-500 mb-8">Your account is successfully linked. Documents are synced automatically.</p>
+        <h1 className="font-display text-2xl font-bold tracking-tight text-slate-900 mb-2">{t("docs.digilockerConnected")}</h1>
+        <p className="text-slate-500 mb-8">{t("connected.linked")}</p>
         <Link href="/dashboard/documents">
-          <Button variant="secondary">Back to Document Center</Button>
+          <Button variant="secondary">{t("connected.backToDocs")}</Button>
         </Link>
       </Container>
     );
@@ -45,8 +47,8 @@ export default function ConnectedServicesPage() {
   return (
     <Container className="py-12 max-w-2xl">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">Connected Services</h1>
-        <p className="text-slate-500">Link external government services to simplify claims and verification.</p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">{t("connected.title")}</h1>
+        <p className="text-slate-500">{t("connected.subtitle")}</p>
       </div>
 
       <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden p-8 relative min-h-[400px] flex flex-col justify-center">
@@ -71,14 +73,14 @@ export default function ConnectedServicesPage() {
                 </div>
               </div>
               
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">Connect DigiLocker</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">{t("docs.connect")}</h2>
               <p className="text-slate-500 mb-8 max-w-md mx-auto">
                 Securely link your DigiLocker account to instantly fetch your Aadhaar, PAN, and other verified documents for faster claim processing.
               </p>
 
               <div className="p-4 bg-slate-50 rounded-xl text-xs text-slate-500 border border-slate-200 mb-8 inline-block text-left">
-                <strong>Simulated prototype connection</strong>
-                <p className="mt-1">This will not actually connect to DigiLocker or access real data.</p>
+                <strong>{t("connected.simulated")}</strong>
+                <p className="mt-1">{t("connected.noRealData")}</p>
               </div>
 
               <div>
@@ -106,8 +108,8 @@ export default function ConnectedServicesPage() {
                 </svg>
               </div>
               
-              <h2 className="text-xl font-semibold text-slate-900 mb-2">Authenticating...</h2>
-              <p className="text-slate-500">Securely connecting to DigiLocker services.</p>
+              <h2 className="text-xl font-semibold text-slate-900 mb-2">{t("connected.authenticating")}</h2>
+              <p className="text-slate-500">{t("connected.connecting")}</p>
             </motion.div>
           )}
 
@@ -122,8 +124,8 @@ export default function ConnectedServicesPage() {
                 <CheckCircle2 className="h-10 w-10 text-emerald-600" />
               </div>
               
-              <h2 className="text-xl font-semibold text-slate-900 mb-2">Successfully Connected</h2>
-              <p className="text-slate-500">Your documents are now synced. Redirecting...</p>
+              <h2 className="text-xl font-semibold text-slate-900 mb-2">{t("connected.success")}</h2>
+              <p className="text-slate-500">{t("connected.synced")}</p>
             </motion.div>
           )}
         </AnimatePresence>

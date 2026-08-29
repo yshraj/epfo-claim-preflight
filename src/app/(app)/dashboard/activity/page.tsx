@@ -8,7 +8,9 @@ import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useT } from "@/i18n/client";
 export default function ActivityPage() {
+  const t = useT();
   const { user, dispatch } = useSession();
   const [filter, setFilter] = useState<string>("all");
 
@@ -31,8 +33,8 @@ export default function ActivityPage() {
   return (
     <Container className="py-12 max-w-4xl">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">Activity & Notifications</h1>
-        <p className="text-slate-500">Track your recent account activity and important alerts.</p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">{t("activity.title")}</h1>
+        <p className="text-slate-500">{t("activity.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -41,7 +43,7 @@ export default function ActivityPage() {
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden sticky top-24">
             <div className="border-b border-slate-100 p-4 flex items-center gap-2 bg-slate-50">
               <Bell className="h-4 w-4 text-slate-600" />
-              <h2 className="font-display font-semibold text-slate-900">Notifications</h2>
+              <h2 className="font-display font-semibold text-slate-900">{t("activity.notifications")}</h2>
               {user.notifications.filter(n => !n.read).length > 0 && (
                 <Badge tone="error" className="ml-auto">{user.notifications.filter(n => !n.read).length} New</Badge>
               )}
@@ -76,7 +78,7 @@ export default function ActivityPage() {
                   </div>
                 </div>
               )) : (
-                <div className="p-6 text-center text-sm text-slate-500">No notifications.</div>
+                <div className="p-6 text-center text-sm text-slate-500">{t("activity.noNotifications")}</div>
               )}
             </div>
           </div>
@@ -86,14 +88,14 @@ export default function ActivityPage() {
         <div className="md:col-span-2">
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden min-h-[600px]">
             <div className="border-b border-slate-100 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <h2 className="font-display font-semibold text-lg text-slate-900">Activity History</h2>
+              <h2 className="font-display font-semibold text-lg text-slate-900">{t("activity.history")}</h2>
               
               <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-hide">
                 <Filter className="h-4 w-4 text-slate-400 hidden sm:block" />
                 <button onClick={() => setFilter("all")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "all" ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>All</button>
-                <button onClick={() => setFilter("claim")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "claim" ? "bg-brand-100 text-brand-700" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>Claims</button>
-                <button onClick={() => setFilter("document")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "document" ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>Documents</button>
-                <button onClick={() => setFilter("profile")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "profile" ? "bg-slate-200 text-slate-800" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>Profile</button>
+                <button onClick={() => setFilter("claim")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "claim" ? "bg-brand-100 text-brand-700" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>{t("activity.claims")}</button>
+                <button onClick={() => setFilter("document")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "document" ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>{t("dash.documents")}</button>
+                <button onClick={() => setFilter("profile")} className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${filter === "profile" ? "bg-slate-200 text-slate-800" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>{t("activity.profile")}</button>
               </div>
             </div>
 
@@ -121,7 +123,7 @@ export default function ActivityPage() {
                         
                         {/* Add extra context based on type if needed */}
                         {activity.type === "claim" && (
-                          <div className="mt-2 text-xs text-brand-600 font-medium">EPFO Claim Service</div>
+                          <div className="mt-2 text-xs text-brand-600 font-medium">{t("activity.service")}</div>
                         )}
                       </div>
                     </motion.div>

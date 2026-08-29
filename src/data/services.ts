@@ -5,172 +5,172 @@
 // into this prototype's actual interactive flow; every other entry is
 // pure informational content, never a form or fake submit button, so
 // it can't be mistaken for a working feature.
+import type { TranslationKey } from "@/i18n";
+
 export type ServiceAudience = "Employee" | "Employer" | "Pensioner" | "Cross-cutting";
 
+// Prose lives in the dictionaries, not here, so the catalogue renders in the
+// member's language. `whereItLives` stays a literal: "Member e-Sewa", "UMANG"
+// and the bare domains are the names printed on the real portal, and
+// translating them would make the destination harder to find.
 export interface Service {
   slug: string;
-  name: string;
+  nameKey: TranslationKey;
   audience: ServiceAudience;
   whereItLives: string;
-  summary: string;
-  whyItMatters: string;
-  honestNote?: string;
+  summaryKey: TranslationKey;
+  whyItMattersKey: TranslationKey;
+  honestNoteKey?: TranslationKey;
   isLiveJourney?: boolean;
 }
 
 export const SERVICES: Service[] = [
   {
     slug: "withdraw-pf",
-    name: "Withdraw PF",
+    nameKey: "service.withdraw-pf.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa (unifiedportal-mem.epfindia.gov.in)",
-    summary: "Apply for partial or full withdrawal of your Provident Fund balance.",
-    whyItMatters:
-      "This is the one flow in this prototype that's fully real — a pre-flight check that catches the mismatches that cause EPFO to reject claims weeks later.",
+    summaryKey: "service.withdraw-pf.summary",
+    whyItMattersKey: "service.withdraw-pf.why",
     isLiveJourney: true,
   },
   {
     slug: "view-passbook",
-    name: "View Passbook",
+    nameKey: "service.view-passbook.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa",
-    summary: "Real-time EPF account balance and full transaction history.",
-    whyItMatters:
-      "The passbook is often the first place a member notices something's wrong — a missing employer contribution, a gap in the timeline.",
+    summaryKey: "service.view-passbook.summary",
+    whyItMattersKey: "service.view-passbook.why",
   },
   {
     slug: "update-kyc",
-    name: "Update KYC",
+    nameKey: "service.update-kyc.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa",
-    summary: "Update Aadhaar, PAN and bank account details linked to your UAN.",
-    whyItMatters:
-      "Name mismatches between these three records are the single most common reason PF claims get rejected — exactly what this prototype's pre-flight check catches.",
+    summaryKey: "service.update-kyc.summary",
+    whyItMattersKey: "service.update-kyc.why",
   },
   {
     slug: "know-your-uan",
-    name: "Know Your UAN",
+    nameKey: "service.know-your-uan.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa",
-    summary: "Retrieve your Universal Account Number using basic personal details.",
-    whyItMatters: "Without your UAN, none of the other member services are reachable.",
+    summaryKey: "service.know-your-uan.summary",
+    whyItMattersKey: "service.know-your-uan.why",
   },
   {
     slug: "online-claims-transfer",
-    name: "Online Claims & Transfer",
+    nameKey: "service.online-claims-transfer.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa",
-    summary: "Submit claim requests or transfer your EPF balance between accounts.",
-    whyItMatters: "Covers job changes where a member's PF needs to move to a new employer's account.",
+    summaryKey: "service.online-claims-transfer.summary",
+    whyItMattersKey: "service.online-claims-transfer.why",
   },
   {
     slug: "activate-uan",
-    name: "Activate UAN",
+    nameKey: "service.activate-uan.name",
     audience: "Employee",
     whereItLives: "UMANG app (Aadhaar Face Auth)",
-    summary: "Activate a newly issued UAN so you can access EPF services online.",
-    whyItMatters: "This determines whether a member can use any EPFO web service at all.",
-    honestNote:
-      "As of this research, EPFO discontinued this on the web portal entirely — it now redirects to the UMANG mobile app. Members without a smartphone have no stated web alternative.",
+    summaryKey: "service.activate-uan.summary",
+    whyItMattersKey: "service.activate-uan.why",
+    honestNoteKey: "service.activate-uan.note",
   },
   {
     slug: "file-death-claim",
-    name: "File Death Claim",
+    nameKey: "service.file-death-claim.name",
     audience: "Employee",
     whereItLives: "Member e-Sewa",
-    summary: "Filed by an eligible nominee to claim a deceased member's PF, pension and insurance dues.",
-    whyItMatters: "Often the most time-pressured, highest-stakes interaction a family has with EPFO.",
+    summaryKey: "service.file-death-claim.summary",
+    whyItMattersKey: "service.file-death-claim.why",
   },
   {
     slug: "submit-ecr",
-    name: "Submit ECR",
+    nameKey: "service.submit-ecr.name",
     audience: "Employer",
     whereItLives: "Member e-Sewa (employer login)",
-    summary: "File the monthly Electronic Challan cum Return — contributions for every employee.",
-    whyItMatters: "A late or incorrect ECR is one of the most common causes of a stuck employee claim.",
+    summaryKey: "service.submit-ecr.summary",
+    whyItMattersKey: "service.submit-ecr.why",
   },
   {
     slug: "uan-management",
-    name: "UAN Management",
+    nameKey: "service.uan-management.name",
     audience: "Employer",
     whereItLives: "Member e-Sewa (employer login)",
-    summary: "Centrally manage UANs for every employee at your organisation.",
-    whyItMatters: "Keeps employee records synced so individual claims don't stall on missing data.",
+    summaryKey: "service.uan-management.summary",
+    whyItMattersKey: "service.uan-management.why",
   },
   {
     slug: "employee-exit-management",
-    name: "Employee Exit Management",
+    nameKey: "service.employee-exit-management.name",
     audience: "Employer",
     whereItLives: "Member e-Sewa (employer login)",
-    summary: "Mark an employee's Date of Exit when they leave the organisation.",
-    whyItMatters:
-      "A missing exit date is exactly what this prototype's pre-flight check flags — real EPFO members can wait months for their former employer to file this.",
+    summaryKey: "service.employee-exit-management.summary",
+    whyItMattersKey: "service.employee-exit-management.why",
   },
   {
     slug: "employer-registration",
-    name: "Employer Registration",
+    nameKey: "service.employer-registration.name",
     audience: "Employer",
     whereItLives: "Shram Suvidha Portal (shramsuvidha.gov.in)",
-    summary: "Register a new organisation under the EPF & MP Act, 1952.",
-    whyItMatters: "The starting point for every employee's PF coverage at that organisation.",
+    summaryKey: "service.employer-registration.summary",
+    whyItMattersKey: "service.employer-registration.why",
   },
   {
     slug: "download-forms",
-    name: "Download Forms & Circulars",
+    nameKey: "service.download-forms.name",
     audience: "Employer",
     whereItLives: "epfo.gov.in",
-    summary: "Centralised access to official EPFO forms, notices and circulars.",
-    whyItMatters: "Reference material for compliance teams handling multiple employee cases at once.",
+    summaryKey: "service.download-forms.summary",
+    whyItMattersKey: "service.download-forms.why",
   },
   {
     slug: "jeevan-pramaan",
-    name: "Jeevan Pramaan (Life Certificate)",
+    nameKey: "service.jeevan-pramaan.name",
     audience: "Pensioner",
     whereItLives: "jeevanpramaan.gov.in (cross-ministry, not EPFO-specific)",
-    summary: "Submit a digital life certificate to keep pension payments active.",
-    whyItMatters: "Missing this annually can pause a pensioner's payments entirely.",
-    honestNote: "This isn't even an EPFO system — it's a separate, cross-ministry portal EPFO pensioners are routed to.",
+    summaryKey: "service.jeevan-pramaan.summary",
+    whyItMattersKey: "service.jeevan-pramaan.why",
+    honestNoteKey: "service.jeevan-pramaan.note",
   },
   {
     slug: "view-ppo-details",
-    name: "View PPO Details",
+    nameKey: "service.view-ppo-details.name",
     audience: "Pensioner",
     whereItLives: "Member e-Sewa / pension portal",
-    summary: "View your Pension Payment Order — the record governing your monthly pension.",
-    whyItMatters: "The reference document for any pension dispute or discrepancy.",
+    summaryKey: "service.view-ppo-details.summary",
+    whyItMattersKey: "service.view-ppo-details.why",
   },
   {
     slug: "pensioner-forms",
-    name: "Pensioner Forms & Circulars",
+    nameKey: "service.pensioner-forms.name",
     audience: "Pensioner",
     whereItLives: "epfo.gov.in",
-    summary: "Forms and circulars specific to pension scheme members.",
-    whyItMatters: "Reference material for pension-specific processes not covered by general EPF forms.",
+    summaryKey: "service.pensioner-forms.summary",
+    whyItMattersKey: "service.pensioner-forms.why",
   },
   {
     slug: "grievance-redressal",
-    name: "Grievance Redressal (EPFiGMS)",
+    nameKey: "service.grievance-redressal.name",
     audience: "Cross-cutting",
     whereItLives: "epfigms.gov.in (a separate NIC-built system, own OTP login)",
-    summary: "File a complaint about any EPFO service — for members, pensioners, employers, or others.",
-    whyItMatters: "EPFO's own FAQ names this as the only escalation path when a claim isn't settled within 20 days.",
-    honestNote:
-      "This is a genuinely separate system from the main member portal — a fourth login, not a tab inside the one you already have.",
+    summaryKey: "service.grievance-redressal.summary",
+    whyItMattersKey: "service.grievance-redressal.why",
+    honestNoteKey: "service.grievance-redressal.note",
   },
   {
     slug: "rti",
-    name: "RTI",
+    nameKey: "service.rti.name",
     audience: "Cross-cutting",
     whereItLives: "epfo.gov.in",
-    summary: "File a Right to Information request with EPFO.",
-    whyItMatters: "A formal route to information EPFO doesn't otherwise publish or explain.",
+    summaryKey: "service.rti.summary",
+    whyItMattersKey: "service.rti.why",
   },
   {
     slug: "locate-office",
-    name: "Locate EPFO Office",
+    nameKey: "service.locate-office.name",
     audience: "Cross-cutting",
     whereItLives: "epfo.gov.in directory",
-    summary: "Find the regional EPFO office responsible for your account.",
-    whyItMatters: "Some processes still require an in-person visit or a physically mailed form.",
+    summaryKey: "service.locate-office.summary",
+    whyItMattersKey: "service.locate-office.why",
   },
 ];

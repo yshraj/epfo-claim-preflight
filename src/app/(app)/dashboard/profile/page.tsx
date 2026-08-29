@@ -6,7 +6,9 @@ import { CheckCircle2, AlertCircle, ChevronRight, User, Phone, MapPin, Shield, B
 import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 
+import { useT } from "@/i18n/client";
 export default function ProfilePage() {
+  const t = useT();
   const { user } = useSession();
 
   if (!user) return null;
@@ -38,8 +40,8 @@ export default function ProfilePage() {
   return (
     <Container className="py-12 max-w-4xl">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">Profile Settings</h1>
-        <p className="text-slate-500">Manage your personal information, KYC details, and security preferences.</p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 mb-2">{t("profile.title")}</h1>
+        <p className="text-slate-500">{t("profile.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -72,12 +74,12 @@ export default function ProfilePage() {
               <div className="bg-brand-50 p-2 rounded-lg text-brand-600">
                 <User className="h-5 w-5" />
               </div>
-              <h2 className="font-display font-semibold text-lg text-slate-900">Personal Details</h2>
+              <h2 className="font-display font-semibold text-lg text-slate-900">{t("profile.personal")}</h2>
             </div>
             <div className="p-0">
               <dl className="divide-y divide-slate-100">
                 <div className="px-5 py-4 grid grid-cols-3 gap-4 hover:bg-slate-50/50 transition-colors">
-                  <dt className="text-sm font-medium text-slate-500">Name (as per Aadhaar)</dt>
+                  <dt className="text-sm font-medium text-slate-500">{t("profile.nameAadhaar")}</dt>
                   <dd className="text-sm text-slate-900 col-span-2 font-medium">{user.aadhaarName}</dd>
                 </div>
                 <div className="px-5 py-4 grid grid-cols-3 gap-4 hover:bg-slate-50/50 transition-colors">
@@ -87,7 +89,7 @@ export default function ProfilePage() {
                   </dd>
                 </div>
                 <div className="px-5 py-4 grid grid-cols-3 gap-4 hover:bg-slate-50/50 transition-colors">
-                  <dt className="text-sm font-medium text-slate-500">Date of Birth</dt>
+                  <dt className="text-sm font-medium text-slate-500">{t("profile.dob")}</dt>
                   <dd className="text-sm text-slate-900 col-span-2">{new Date(user.dobAadhaar).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</dd>
                 </div>
               </dl>
@@ -100,13 +102,13 @@ export default function ProfilePage() {
               <div className="bg-emerald-50 p-2 rounded-lg text-emerald-600">
                 <Phone className="h-5 w-5" />
               </div>
-              <h2 className="font-display font-semibold text-lg text-slate-900">Contact Details</h2>
+              <h2 className="font-display font-semibold text-lg text-slate-900">{t("profile.contact")}</h2>
             </div>
             <div className="p-0">
               <dl className="divide-y divide-slate-100">
                 <div className="px-5 py-4 flex justify-between items-center hover:bg-slate-50/50 transition-colors">
                   <div>
-                    <dt className="text-sm font-medium text-slate-500 mb-1">Mobile Number</dt>
+                    <dt className="text-sm font-medium text-slate-500 mb-1">{t("profile.mobile")}</dt>
                     <dd className="text-sm text-slate-900 font-medium tracking-wide">
                       {user.phone.replace(/(\d{2})(\d{4})(\d{4})/, "$1 •••• $3")}
                     </dd>
@@ -115,7 +117,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="px-5 py-4 flex justify-between items-center hover:bg-slate-50/50 transition-colors">
                   <div>
-                    <dt className="text-sm font-medium text-slate-500 mb-1">Email Address</dt>
+                    <dt className="text-sm font-medium text-slate-500 mb-1">{t("profile.email")}</dt>
                     <dd className="text-sm text-slate-900">{user.email}</dd>
                   </div>
                   <StatusBadge status="verified" />
@@ -130,20 +132,20 @@ export default function ProfilePage() {
               <div className="bg-indigo-50 p-2 rounded-lg text-indigo-600">
                 <Shield className="h-5 w-5" />
               </div>
-              <h2 className="font-display font-semibold text-lg text-slate-900">Identity & KYC</h2>
+              <h2 className="font-display font-semibold text-lg text-slate-900">{t("profile.identityKyc")}</h2>
             </div>
             <div className="p-0">
               <dl className="divide-y divide-slate-100">
                 <div className="px-5 py-4 flex justify-between items-center hover:bg-slate-50/50 transition-colors">
                   <div>
-                    <dt className="text-sm font-medium text-slate-500 mb-1">Aadhaar Card</dt>
+                    <dt className="text-sm font-medium text-slate-500 mb-1">{t("profile.aadhaarCard")}</dt>
                     <dd className="text-sm text-slate-900 font-mono tracking-wider">•••• •••• 4821</dd>
                   </div>
                   <StatusBadge status={user.kycStatus.aadhaar} />
                 </div>
                 <div className="px-5 py-4 flex justify-between items-center hover:bg-slate-50/50 transition-colors">
                   <div>
-                    <dt className="text-sm font-medium text-slate-500 mb-1">PAN Card</dt>
+                    <dt className="text-sm font-medium text-slate-500 mb-1">{t("profile.panCard")}</dt>
                     <dd className="text-sm text-slate-900 font-mono tracking-wider">•••••4821</dd>
                   </div>
                   <StatusBadge status={user.kycStatus.pan} />
@@ -158,13 +160,13 @@ export default function ProfilePage() {
               <div className="bg-sky-50 p-2 rounded-lg text-sky-600">
                 <CreditCard className="h-5 w-5" />
               </div>
-              <h2 className="font-display font-semibold text-lg text-slate-900">Bank Account</h2>
+              <h2 className="font-display font-semibold text-lg text-slate-900">{t("profile.bankAccount")}</h2>
             </div>
             <div className="p-0">
               <dl className="divide-y divide-slate-100">
                 <div className="px-5 py-4 flex justify-between items-center hover:bg-slate-50/50 transition-colors">
                   <div>
-                    <dt className="text-sm font-medium text-slate-500 mb-1">Account details</dt>
+                    <dt className="text-sm font-medium text-slate-500 mb-1">{t("profile.accountDetails")}</dt>
                     <dd className="text-sm text-slate-900">
                       <div className="font-medium">{user.bankName}</div>
                       <div className="text-slate-500 mt-0.5 text-xs">State Bank of India •••• 9821</div>
@@ -177,7 +179,7 @@ export default function ProfilePage() {
                 <div className="bg-amber-50 px-5 py-4 border-t border-amber-100">
                   <div className="flex gap-2 text-sm text-amber-800">
                     <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                    <p>Your bank details need to be verified by your employer before you can submit a withdrawal claim.</p>
+                    <p>{t("profile.bankNeedsVerification")}</p>
                   </div>
                 </div>
               )}

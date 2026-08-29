@@ -18,3 +18,19 @@ body {
 ::selection {
   @apply bg-brand-200 text-brand-900;
 }
+
+/* Devanagari has no glyphs in Inter/Outfit/JetBrains Mono, so when Hindi is
+   active the Devanagari face leads and the Latin faces stay as fallbacks for
+   any numerals, UAN strings and English proper nouns mixed into the copy. */
+html[lang="hi"] body,
+html[lang="hi"] .font-body {
+  font-family: var(--font-devanagari), var(--font-body), system-ui, sans-serif;
+}
+
+html[lang="hi"] .font-display {
+  font-family: var(--font-devanagari), var(--font-display), system-ui, sans-serif;
+}
+
+html[lang="hi"] .font-mono {
+  font-family: var(--font-mono), var(--font-devanagari), monospace;
+}

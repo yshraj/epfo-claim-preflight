@@ -2,6 +2,7 @@ import Link from "next/link";
 import members from "@/data/mockMembers.json";
 import type { MemberProfile } from "@/types/member";
 import { checkNameMatch } from "@/lib/matchEngine";
+import { getT } from "@/i18n/server";
 import { applyOverrides, buildClaimHref, parseOverrides } from "@/lib/claimState";
 import FixNameForm from "./FixNameForm";
 import Container from "@/components/ui/Container";
@@ -17,23 +18,30 @@ const typedMembers = members as MemberProfile[];
 export default function FixPage({
   searchParams,
 }: {
-  searchParams: { uan?: string; reason?: string; nameOverride?: string; doeOverride?: string };
+  searchParams: {
+    uan?: string;
+    reason?: string;
+    nameOverride?: string;
+    dobOverride?: string;
+    doeOverride?: string;
+  };
 }) {
   const rawMember = typedMembers.find((m) => m.uan === searchParams.uan) ?? typedMembers[0];
   const overrides = parseOverrides(searchParams);
   const member = applyOverrides(rawMember, overrides);
   const reason = searchParams.reason ?? "medical";
-  const nameCheck = checkNameMatch(member);
+  const t = getT();
+  const nameCheck = checkNameMatch(member, t);
 
   if (nameCheck.status === "pass") {
     return (
       <Container size="narrow" className="py-16 text-center">
-        <p className="text-slate-600 mb-6">Nothing to fix here — you&apos;re good to go.</p>
+        <p className="text-slate-600 mb-6">{t("claim.fix.nothing")}</p>
         <Link
           href={buildClaimHref("/claim/preflight", { uan: member.uan, reason })}
           className={cn(buttonVariants())}
         >
-          Back to pre-flight check
+          {t("claim.fix.back")}
         </Link>
       </Container>
     );
@@ -42,10 +50,10 @@ export default function FixPage({
   return (
     <Container size="narrow" className="py-16">
       <h1 className="font-display text-3xl font-bold tracking-tight mb-2 text-slate-950">
-        Fix name mismatch
+        {t("claim.fix.title")}
       </h1>
       <p className="text-sm text-slate-500 mb-8">
-        We noticed a small difference in your name. This may prevent your claim from being processed.
+        {t("claim.fix.subtitle")}
       </p>
 
       <FixNameForm
